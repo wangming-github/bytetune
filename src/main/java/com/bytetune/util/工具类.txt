@@ -1,0 +1,28 @@
+工具类
+util
+字符串工具类 StringUtils，时间工具类 DateUtils，文件工具类 FileUtils
+
+常量类
+constant
+系统常量 SysConstants，角色权限常量 RoleConstants
+
+
+枚举类
+enums
+SongStatusEnum，UserRoleEnum
+
+异常处理
+exception
+BusinessException，GlobalExceptionHandler
+
+公共 DTO/VO
+dto / vo
+SongDTO，SongVO
+
+
+配置类
+config
+SwaggerConfig，MyBatisPlusConfig
+
+
+
