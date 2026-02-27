@@ -60,7 +60,7 @@ public class DruidSingleLineFilter extends StatFilter {
         singleLineSql = replaceParameters(singleLineSql, statement);
 
         // 4. 输出到日志
-        log.info(singleLineSql);
+        log.debug(singleLineSql);
     }
 
     /**

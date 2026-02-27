@@ -1,15 +1,22 @@
 package com.bytetune.entity;
 
+import com.bytetune.util.UploadStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
+@Builder // Entity 需要无参构造函数（默认要求），Lombok 的 @Builder 不会生成无参构造，所以最好保留 @NoArgsConstructor：
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(description = "歌曲实体")
 public class Song implements Serializable {
 
@@ -55,11 +62,17 @@ public class Song implements Serializable {
     @Schema(description = "封面对象名")
     private String coverObject;
 
+    /**
+     * @Builder.Default 是 Lombok 提供的注解，用在带 @Builder 的类字段上，
+     * 用于 给 Builder 提供默认值，否则 Builder 会把字段初始化为 Java 的默认值（0、null、false），而不是你在字段上写的默认值。
+     */
+    @Builder.Default
     @Schema(description = "0未上传 1已上传 2失败")
-    private int status;
+    private int status = UploadStatus.NOT_UPLOADED.getCode(); // Builder 默认值
 
     @Schema(description = "创建时间")
-    private LocalDateTime createdAt;
+    @Builder.Default
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Schema(description = "更新时间")
     private LocalDateTime updatedAt;

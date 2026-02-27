@@ -1,6 +1,5 @@
 package com.bytetune.exception;
 
-import com.bytetune.service.impl.SongServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

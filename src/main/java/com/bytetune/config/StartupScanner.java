@@ -1,15 +1,12 @@
 package com.bytetune.config;
 
-import com.alibaba.druid.filter.logging.Slf4jLogFilter;
-import com.alibaba.druid.pool.DruidDataSource;
+import com.bytetune.config.properties.FileProperties;
 import com.bytetune.dto.SongFileInfo;
 import com.bytetune.entity.Song;
-import com.bytetune.exception.BatchDuplicateException;
 import com.bytetune.service.ISongService;
 import com.bytetune.util.FolderWatcher;
 import com.bytetune.util.SongFileScanner;
-import com.bytetune.util.SongFileScannerExt;
-import jakarta.annotation.PostConstruct;
+import com.bytetune.util.SongEntityBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -17,7 +14,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import javax.sql.DataSource;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,13 +25,11 @@ import java.util.List;
 @Configuration
 public class StartupScanner {
 
-    private final ISongService songService;
+    @Autowired
+    ISongService songService;
+    @Autowired
+    FileProperties fileProperties;
 
-    public StartupScanner(ISongService songService) {
-        this.songService = songService;
-    }
-
-    private final String musicFolder = "/Users/zimai/Music/云音乐转换mp3";
     // 批量缓存，用于批量入库
     private final List<Song> buffer = new ArrayList<>();
     private static final int BATCH_SIZE = 5; // 每批次入库数量
@@ -52,54 +46,14 @@ public class StartupScanner {
     @Bean
     public CommandLineRunner scanLocalMusic(ISongService songService) {
         return args -> {
-            final int BATCH_SIZE = 20;
 
-            List<SongFileInfo> files = SongFileScanner.scanFolder(musicFolder);
-            processFilesBatch(songService, files, BATCH_SIZE);
+            // 第一次启动项目时扫描文件列表并批量入库数据库
+            List<SongFileInfo> files = SongFileScanner.scanFolder(fileProperties.getWatchPath());
+            songService.loadExistingSongs(files);
 
             // 启动 FolderWatcher 监听指定文件夹，当有新文件创建时，调用当前类的 handleNewFile 方法处理新文件
-            FolderWatcher.watchFolder(musicFolder, this::handleNewFile);
+            FolderWatcher.watchFolder(fileProperties.getWatchPath(), this::handleNewFile);
         };
-    }
-
-    /**
-     * 第一次启动项目时扫描文件列表并批量入库数据库
-     *
-     * @param songService ISongService 实例
-     * @param files       待处理的本地文件信息列表
-     * @param batchSize   批量插入大小
-     */
-    public void processFilesBatch(ISongService songService, List<SongFileInfo> files, int batchSize) {
-        if (files == null || files.isEmpty()) {
-            log.debug("没有需要处理的文件！");
-            return;
-        }
-
-        // 转换为数据库实体
-        List<Song> songs = files.stream().map(SongFileScannerExt::toEntity).toList();
-
-        // 过滤已经存在的歌曲（path + md5）
-        List<Song> newSongs = songs.stream().filter(song -> !songService.existsByFile(song.getPath(), song.getMd5())).toList();
-
-        if (newSongs.isEmpty()) {
-            log.info("没有新的数据需要导入！");
-            return;
-        }
-
-        // 批量保存到数据库
-        for (int i = 0; i < newSongs.size(); i += batchSize) {
-            List<Song> batch = newSongs.subList(i, Math.min(i + batchSize, newSongs.size()));
-            try {
-                songService.saveBatch(songs);
-            } catch (BatchDuplicateException e) {
-                // 可以在这里做特殊处理，比如记录、跳过、回调等
-                log.info("批量保存遇到重复数据: {}", e.getMessage());
-            } catch (Exception e) {
-                throw e;
-            }
-
-            log.info("扫描并入库完成，新增歌曲数量：{}", batch.size());
-        }
     }
 
     /**
@@ -148,7 +102,7 @@ public class StartupScanner {
      * 解析 Path 为 Song 实体
      */
     private Song parseSong(Path path) throws Exception {
-        return SongFileScannerExt.toEntity(SongFileScanner.getSongFileInfo(path.toFile()));
+        return SongEntityBuilder.toEntity(SongFileScanner.getSongFileInfo(path.toFile()));
     }
 
     /**

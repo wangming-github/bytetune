@@ -1,5 +1,6 @@
 package com.bytetune.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
@@ -46,6 +47,7 @@ import java.util.function.Consumer;
  * <p>
  * ==============================================================
  */
+@Slf4j
 public class FolderWatcher {
     /* LoggerFactory */
 
@@ -91,7 +93,7 @@ public class FolderWatcher {
             thread.setDaemon(true);    // 设置为守护线程（JVM 退出时自动结束）
             thread.start();  // 启动监听线程
         } catch (IOException e) {
-            e.printStackTrace();  // IO异常通常是路径不存在、无权限或文件系统不支持 WatchService
+            log.warn("路径不存在、无权限或文件系统不支持 WatchService");
         }
     }
 }

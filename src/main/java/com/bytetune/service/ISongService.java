@@ -1,5 +1,6 @@
 package com.bytetune.service;
 
+import com.bytetune.dto.SongFileInfo;
 import com.bytetune.entity.Song;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -29,4 +30,15 @@ public interface ISongService extends IService<Song> {
      * @return {@code true} 如果数据库中已存在该文件；{@code false} 如果不存在
      */
     boolean existsByFile(String path, String md5);
+
+    List<Song> selectUnUploaded(int batchSize);
+
+    void updateMinioStatus(Long id, int status, String bucketName, String objectName);
+
+    /**
+     * 第一次启动项目时扫描文件列表并批量入库数据库
+     *
+     * @param files     待处理的本地文件信息列表
+     */
+    void loadExistingSongs(List<SongFileInfo> files);
 }

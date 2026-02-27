@@ -11,7 +11,7 @@ public class SongController {
     @GetMapping("/{id}")
     @Operation(summary = "根据ID获取歌曲信息")
     public Song getSong(@PathVariable Long id) {
-        return new Song(); // 示例返回
+        return Song.builder().build(); // 示例返回
     }
 
     @PostMapping
