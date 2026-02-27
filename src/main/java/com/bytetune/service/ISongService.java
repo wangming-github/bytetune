@@ -20,10 +20,13 @@ public interface ISongService extends IService<Song> {
     List<Song> getAll();
 
     /**
-     * 判断数据库中是否存在指定 file_url 的歌曲
+     * 判断指定文件是否已经存在于数据库中
      *
-     * @param fileUrl 文件完整路径或 URL
-     * @return true 已存在，false 不存在
+     * <p>同时通过文件路径和 MD5 值判断，防止同名但内容不同的文件重复入库。</p>
+     *
+     * @param path 文件的绝对路径或相对路径
+     * @param md5  文件的 MD5 值，用于唯一性判断
+     * @return {@code true} 如果数据库中已存在该文件；{@code false} 如果不存在
      */
-    boolean existsByFileUrl(String fileUrl);
+    boolean existsByFile(String path, String md5);
 }

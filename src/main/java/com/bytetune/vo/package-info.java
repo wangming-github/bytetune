@@ -6,7 +6,7 @@
  * - 与 DTO 不同，VO 更偏向展示层
  * <p>
  * 常见内容：
- * - SongVO、UserVO
+ * - SongO、UserVO
  * - 前端显示字段组合
  */
 package com.bytetune.vo;
