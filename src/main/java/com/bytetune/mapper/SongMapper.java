@@ -1,10 +1,8 @@
 package com.bytetune.mapper;
 
-import com.bytetune.entity.Song;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.bytetune.entity.Song;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 /**
  * <p>

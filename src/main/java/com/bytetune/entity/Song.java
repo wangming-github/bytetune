@@ -2,8 +2,6 @@ package com.bytetune.entity;
 
 import com.bytetune.util.UploadStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -63,7 +61,7 @@ public class Song implements Serializable {
     private String coverObject;
 
     /**
-     * @Builder.Default 是 Lombok 提供的注解，用在带 @Builder 的类字段上，
+     * 这个 @Builder.Default 是 Lombok 提供的注解，用在带 @Builder 的类字段上，
      * 用于 给 Builder 提供默认值，否则 Builder 会把字段初始化为 Java 的默认值（0、null、false），而不是你在字段上写的默认值。
      */
     @Builder.Default

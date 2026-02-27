@@ -1,14 +1,12 @@
 package com.bytetune.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.*;
-
-import static java.nio.file.StandardWatchEventKinds.*;
-
 import java.util.function.Consumer;
+
+import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
 
 /**
  * ==============================================================

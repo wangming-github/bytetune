@@ -8,10 +8,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * SongFileScanner 扩展方法：把扫描到的文件信息转换成 Song 实体
- */
-
-/**
  * 文件信息转换工具
  *
  * <p>将 SongFileInfo 转换为 Song Entity，方便入库。</p>
