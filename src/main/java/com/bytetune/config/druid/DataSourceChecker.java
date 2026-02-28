@@ -18,6 +18,8 @@ public class DataSourceChecker implements ApplicationListener<ApplicationReadyEv
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         log.info("当前数据源类型:{} ", dataSource.getClass().getName());
+        log.info("OpenApi页面: http://localhost:8080/redoc/api.html");
         log.info("Druid监控页面: http://localhost:8080/druid/index.html");
+        log.info("Minio监控页面: http://localhost:62471/browser/songs");
     }
 }

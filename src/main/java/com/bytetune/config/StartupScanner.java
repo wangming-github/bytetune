@@ -3,7 +3,8 @@ package com.bytetune.config;
 import com.bytetune.config.properties.FileProperties;
 import com.bytetune.dto.SongFileInfo;
 import com.bytetune.entity.Song;
-import com.bytetune.service.ISongService;
+import com.bytetune.service.SongExtService;
+import com.bytetune.service.SongService;
 import com.bytetune.util.FolderWatcher;
 import com.bytetune.util.SongFileScanner;
 import com.bytetune.util.SongEntityBuilder;
@@ -27,7 +28,9 @@ import java.util.List;
 public class StartupScanner {
 
     @Autowired
-    ISongService songService;
+    SongService songService;
+    @Autowired
+    SongExtService songExtService;
     @Autowired
     FileProperties fileProperties;
 
@@ -45,13 +48,13 @@ public class StartupScanner {
      * @return
      */
     @Bean
-    public CommandLineRunner scanLocalMusic(ISongService songService) {
+    public CommandLineRunner scanLocalMusic(SongService songService) {
         return args -> {
 
             MDC.put("JOB", "[加载现有文件到数据库]");
             // 第一次启动项目时扫描文件列表并批量入库数据库
             List<SongFileInfo> files = SongFileScanner.scanFolder(fileProperties.getWatchPath());
-            songService.loadExistingSongs(files);
+            songExtService.loadExistingSongs(files);
             MDC.clear();
 
             // 启动 FolderWatcher 监听指定文件夹，当有新文件创建时，调用当前类的 handleNewFile 方法处理新文件

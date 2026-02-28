@@ -2,10 +2,9 @@ package com.bytetune.config;
 
 import com.bytetune.config.properties.MinioProperties;
 import com.bytetune.entity.Song;
-import com.bytetune.service.ISongService;
+import com.bytetune.service.SongService;
 import com.bytetune.storage.MinioService;
 import com.bytetune.util.UploadStatus;
-import com.google.errorprone.annotations.Var;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
@@ -23,7 +22,7 @@ public class MinioUploadScheduler {
     @Autowired
     MinioProperties minio;
     @Autowired
-    ISongService songService;
+    SongService songService;
     @Autowired
     MinioService minioService;
 
