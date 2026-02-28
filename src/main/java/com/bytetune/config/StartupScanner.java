@@ -8,6 +8,7 @@ import com.bytetune.util.FolderWatcher;
 import com.bytetune.util.SongFileScanner;
 import com.bytetune.util.SongEntityBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -47,9 +48,11 @@ public class StartupScanner {
     public CommandLineRunner scanLocalMusic(ISongService songService) {
         return args -> {
 
+            MDC.put("JOB", "[加载现有文件到数据库]");
             // 第一次启动项目时扫描文件列表并批量入库数据库
             List<SongFileInfo> files = SongFileScanner.scanFolder(fileProperties.getWatchPath());
             songService.loadExistingSongs(files);
+            MDC.clear();
 
             // 启动 FolderWatcher 监听指定文件夹，当有新文件创建时，调用当前类的 handleNewFile 方法处理新文件
             FolderWatcher.watchFolder(fileProperties.getWatchPath(), this::handleNewFile);
@@ -66,15 +69,20 @@ public class StartupScanner {
      * @param path 新文件路径
      */
     public void handleNewFile(Path path) {
+        MDC.put("JOB", "[监听指定文件夹]");
+        log.info("扫描到新的文件{}", path);
+        MDC.put("songId", "[" + path + "]");
         try {
             if (!isAudioFile(path)) return;
+            log.debug("是音频文件");
             Song song = parseSong(path);
 
             // 去重，文件已存在数据库则跳过
             if (songService.existsByFile(song.getPath(), song.getMd5())) {
-                log.debug("文件已存在，跳过入库：{}", song.getObjectName());
+                log.info("文件已入库");
                 return;
             }
+            log.info("未入库，加入批量缓存等待处理。");
             // 加入批量缓存
             buffer.add(song);
             if (buffer.size() >= BATCH_SIZE) {
@@ -82,6 +90,8 @@ public class StartupScanner {
             }
         } catch (Exception e) {
             log.error("处理新文件失败: {}", path.toAbsolutePath(), e);
+        } finally {
+            MDC.clear();
         }
     }
 
@@ -111,7 +121,7 @@ public class StartupScanner {
     public void flushBuffer() {
         if (buffer.isEmpty()) return;
         songService.saveAll(new ArrayList<>(buffer));
-        log.debug("批量入库完成，数量：{}", buffer.size());
+        log.debug("批量缓存入库完成，数量：{}", buffer.size());
         buffer.clear();
     }
 
@@ -120,7 +130,7 @@ public class StartupScanner {
      * OR
      * LinkedBlockingQueue + 单线程消费线程
      */
-    @Scheduled(fixedDelay = 3000)
+    @Scheduled(fixedDelay = 10_000)
     public void autoFlush() {
         synchronized (this) {
             if (!buffer.isEmpty()) {

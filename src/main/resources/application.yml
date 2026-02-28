@@ -9,7 +9,8 @@ minio:
 logging:
   level:
     root: info           # 全局日志
-    com.bytetune: DEBUG   # 只打印你自己项目包下的 debug
+    com.bytetune: debug   # 只打印你自己项目包下的 debug
+    com.bytetune.mapper.SongMapper: info
 
 mybatis-plus:
   #  classpath*:mapper/**/*.xml → 扫描 resources/mapper/ 下所有 XML，包括子目录

@@ -87,7 +87,7 @@ public class FolderWatcher {
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();   // 恢复中断标志位，避免吞掉中断信号
                 }
-            }, "Folder-Watcher-Thread");
+            }, "watcher");
             thread.setDaemon(true);    // 设置为守护线程（JVM 退出时自动结束）
             thread.start();  // 启动监听线程
         } catch (IOException e) {

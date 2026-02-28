@@ -1,5 +1,7 @@
 package com.bytetune.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.bytetune.util.UploadStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -22,6 +24,7 @@ public class Song implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Schema(description = "歌曲ID", example = "1")
+    @TableId(type = IdType.ASSIGN_ID)    //MyBatis-Plus 内置雪花算法生成 Long 类型 id。
     private Long id;
 
     @Schema(description = "歌曲名称", example = "夜曲")

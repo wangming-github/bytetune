@@ -42,9 +42,7 @@ public class MinioConfig {
         if (!exists) {
             client.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
         }
-
         log.info("默认bucket:{},创建完成", bucketName);
-
         return client;
     }
 }

@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileInputStream;
 
-import static com.baomidou.mybatisplus.extension.toolkit.Db.updateById;
-
 @Slf4j
 @Service
 public class MinioServiceImpl implements MinioService {
@@ -24,21 +22,24 @@ public class MinioServiceImpl implements MinioService {
     MinioProperties minioProperties;
 
     @Override
-    public void uploadToMinio(Song song, String objectName) {
-
+    public boolean uploadToMinio(Song song, String objectName) {
         File file = new File(song.getPath());
         if (!file.exists()) {
-            throw new RuntimeException("文件不存在");
-        }
-        try {
-            minioClient.putObject(PutObjectArgs.builder()//
-                    .bucket(minioProperties.getBucketName())//
-                    .object(objectName)//
-                    .stream(new FileInputStream(file), file.length(), -1)//
-                    .contentType(song.getContentType()).build());//
-        } catch (Exception e) {
-            log.warn("上传文件失败:{},{}", objectName, e.getMessage());
+            log.error("文件不存在: {}", song.getPath());
+            return false;
         }
 
+        try {
+            minioClient.putObject(PutObjectArgs.builder()
+                    .bucket(minioProperties.getBucketName())
+                    .object(objectName)
+                    .stream(new FileInputStream(file), file.length(), -1)
+                    .contentType(song.getContentType()).build());
+            log.info("上传minio完成!");
+            return true;
+        } catch (Exception e) {
+            log.error("上传失败: {}", e.getMessage());
+            return false;
+        }
     }
 }

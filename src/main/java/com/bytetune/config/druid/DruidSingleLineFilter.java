@@ -4,6 +4,7 @@ import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.proxy.jdbc.JdbcParameter;
 import com.alibaba.druid.proxy.jdbc.StatementProxy;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.context.annotation.Configuration;
 
 @Slf4j
@@ -44,6 +45,7 @@ public class DruidSingleLineFilter extends StatFilter {
      * @param statement 当前执行的 StatementProxy
      */
     private void printSingleLineSqlWithParams(StatementProxy statement) {
+        MDC.put("JOB", "[定时扫描DB未上传数据]");
         // 1. 获取最近执行的 SQL 或批量 SQL
         String sql = statement.getLastExecuteSql();
         if (sql == null) {
@@ -52,7 +54,6 @@ public class DruidSingleLineFilter extends StatFilter {
         if (sql == null) {
             return; // 没有 SQL 则直接返回
         }
-
         // 2. 压缩 SQL 为单行，去掉多余空格和换行
         String singleLineSql = compressSql(sql);
 
@@ -61,6 +62,7 @@ public class DruidSingleLineFilter extends StatFilter {
 
         // 4. 输出到日志
         log.debug(singleLineSql);
+        MDC.clear();
     }
 
     /**
