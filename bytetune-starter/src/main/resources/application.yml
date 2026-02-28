@@ -1,0 +1,49 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: bytetune-starter
+  datasource: #数据源只写一次，只在 starter。
+    url: jdbc:mysql://localhost:3306/byte_tune?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: admin123
+    druid:
+      web-stat-filter:
+        enabled: true
+      stat-view-servlet:
+        enabled: true
+
+bytetune:
+  watchPath: "/Users/zimai/Music/云音乐转换mp3"
+minio:
+  endpoint: http://localhost:9000
+  access-key: minioadmin
+  secret-key: minioadmin
+  bucket-name: songs
+
+logging:
+  level:
+    root: info           # 全局日志
+    com.bytetune: debug   # 只打印你自己项目包下的 debug
+    com.bytetune.mapper.SongMapper: info
+
+mybatis-plus:
+  #  classpath*:mapper/**/*.xml → 扫描 resources/mapper/ 下所有 XML，包括子目录
+  mapper-locations: classpath*:mapper/**/*.xml
+  #  type-aliases-package → 指定实体类包，这样 XML 中可以直接用类名而不用全限定名
+  type-aliases-package: com.bytetune.entity
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+# JSON 文档：http://localhost:8080/v3/api-docs
+# redoc文档 http://localhost:8080/redoc/api.html
+# Swagger UI：http://localhost:8080/swagger-ui.html
+springdoc:
+  api-docs:
+    path: /v3/api-docs      # OpenAPI JSON 文档路径
+  swagger-ui:
+    path: /swagger-ui.html  # Swagger UI 页面路径
+
+
+
