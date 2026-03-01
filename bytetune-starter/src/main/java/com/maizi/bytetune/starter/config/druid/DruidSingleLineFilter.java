@@ -1,11 +1,14 @@
 package com.maizi.bytetune.starter.config.druid;
 
+import com.alibaba.druid.filter.FilterChain;
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.proxy.jdbc.JdbcParameter;
 import com.alibaba.druid.proxy.jdbc.StatementProxy;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.context.annotation.Configuration;
+
+import java.sql.SQLException;
 
 @Slf4j
 @Configuration

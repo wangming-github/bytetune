@@ -4,9 +4,9 @@ import com.maizi.bytetune.common.dto.SongFileInfo;
 import com.maizi.bytetune.common.entity.Song;
 import com.maizi.bytetune.common.service.SongExtService;
 import com.maizi.bytetune.common.service.SongService;
+import com.maizi.bytetune.common.util.SongEntityBuilder;
 import com.maizi.bytetune.file.FileProperties;
 import com.maizi.bytetune.file.FolderWatcher;
-import com.maizi.bytetune.common.util.SongEntityBuilder;
 import com.maizi.bytetune.file.SongFileScanner;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.nio.file.Path;
@@ -34,6 +35,9 @@ public class StartupScanner {
     @Autowired
     FileProperties fileProperties;
 
+    @Autowired
+    private TaskExecutor executor;
+
     // 批量缓存，用于批量入库
     private final List<Song> buffer = new ArrayList<>();
     private static final int BATCH_SIZE = 5; // 每批次入库数量
@@ -43,20 +47,30 @@ public class StartupScanner {
      * 1.	Spring Boot 启动 → 初始化所有 Bean
      * 2.	上下文完成 → 调用所有 CommandLineRunner.run(args)
      * 3.	你的初始化逻辑执行
-     *
-     * @param songService
-     * @return
+     * <p>
+     * Lambda/线程池里的 Runnable 不允许受检异常，必须处理。
+     * •	解决方法就是 try/catch 或者包装成 unchecked。
+     * •	这就是为什么放在 executor 里会编译报错，而直接放在 CommandLineRunner.run 里不会。
+     * <p>
      */
     @Bean
-    public CommandLineRunner scanLocalMusic(SongService songService) {
+    public CommandLineRunner scanLocalMusic() {
         return args -> {
-
-            MDC.put("JOB", "[加载现有文件到数据库]");
-            // 第一次启动项目时扫描文件列表并批量入库数据库
-            List<SongFileInfo> files = SongFileScanner.scanFolder(fileProperties.getWatchPath());
-            songExtService.loadExistingSongs(files);
-            MDC.clear();
-
+            executor.execute(() -> {
+                Thread.currentThread().setName("scan-init"); // 给当前线程临时改名
+                try {
+                    // 异步执行扫描和入库逻辑
+                    MDC.put("JOB", "[加载现有文件到数据库]");
+                    log.info("加载现有文件到数据库,请稍后...");
+                    // 第一次启动项目时扫描文件列表并批量入库数据库
+                    List<SongFileInfo> files = SongFileScanner.scanFolder(fileProperties.getWatchPath());
+                    songExtService.loadExistingSongs(files);
+                } catch (Exception e) {
+                    log.error("扫描文件夹失败", e);
+                } finally {
+                    MDC.clear();
+                }
+            });
             // 启动 FolderWatcher 监听指定文件夹，当有新文件创建时，调用当前类的 handleNewFile 方法处理新文件
             FolderWatcher.watchFolder(fileProperties.getWatchPath(), this::handleNewFile);
         };

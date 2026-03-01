@@ -30,18 +30,29 @@ public class MinioConfig {
      */
     @Bean
     public MinioClient minioClient() throws Exception {
-        // 创建 MinioClient
-        MinioClient client = MinioClient.builder().endpoint(minio.getEndpoint()).credentials(minio.getAccessKey(), minio.getSecretKey()).build();
+        try {
+            // 构建客户端（不会立即发起请求）
+            MinioClient client = MinioClient.builder().endpoint(minio.getEndpoint()).credentials(minio.getAccessKey(), minio.getSecretKey()).build();
+            // 获取默认 bucket 名称
+            String bucketName = minio.getBucketName();
 
-        // 获取默认 bucket 名称
-        String bucketName = minio.getBucketName();
-
-        // 检查 bucket 是否存在，不存在则创建
-        boolean exists = client.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
-        if (!exists) {
-            client.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
+            // 尝试访问 MinIO 创建默认 bucket
+            try {
+                boolean exists = client.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
+                if (!exists) {
+                    client.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
+                }
+                log.info("默认bucket:{},创建完成", bucketName);
+            } catch (Exception e) {
+                // 捕获网络异常或服务未启动异常
+                log.warn("⚠️ MinIO 未启动，默认 bucket:{},初始化失败: {}", bucketName, e.getMessage());
+            }
+            return client;
+        } catch (Exception e) {
+            // 构建客户端失败时捕获异常，避免 Spring 启动报错
+            log.error("❌ MinioClient 初始化失败: {}", e.getMessage());
+            // 返回一个空的客户端（或者可以考虑返回 null，需要 @Nullable 注解处理）
+            return null;
         }
-        log.info("默认bucket:{},创建完成", bucketName);
-        return client;
     }
 }

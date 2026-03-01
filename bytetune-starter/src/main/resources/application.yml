@@ -13,6 +13,13 @@ spring:
       stat-view-servlet:
         enabled: true
 
+# application.yml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
 bytetune:
   watchPath: "/Users/zimai/Music/云音乐转换mp3"
 minio:

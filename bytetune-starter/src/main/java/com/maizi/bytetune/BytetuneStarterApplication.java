@@ -9,7 +9,8 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 public class BytetuneStarterApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BytetuneStarterApplication.class, args);
+        SpringApplication.run(
+                BytetuneStarterApplication.class, args);
     }
 
 }

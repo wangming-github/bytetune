@@ -3,6 +3,7 @@ package com.maizi.bytetune.common.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.maizi.bytetune.common.constants.UploadStatus;
 import com.maizi.bytetune.common.entity.Song;
 import com.maizi.bytetune.common.mapper.SongMapper;
 import com.maizi.bytetune.common.service.SongService;
@@ -56,7 +57,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
     @Override
     public void updateMinioStatus(Long id, int status, String bucketName, String objectName) {
         lambdaUpdate().eq(Song::getId, id).set(Song::getStatus, status).set(Song::getBucketName, bucketName).set(Song::getObjectName, objectName).update();
-        log.info("Status更新完成!");
+        log.info("状态更新为:{},完成!", UploadStatus.fromCode(status));
     }
 
 }
