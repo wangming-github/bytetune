@@ -46,7 +46,7 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
  * ==============================================================
  */
 @Slf4j
-public class FolderWatcher {
+public class WatcherFolder {
     /* LoggerFactory */
 
     /**
@@ -66,12 +66,17 @@ public class FolderWatcher {
      *                   4. 阻塞等待事件
      *                   5. 回调处理
      */
-    public static void watchFolder(String folderPath, Consumer<Path> onCreate) {
+    public static void watch(String folderPath, Consumer<Path> onCreate) {
         // 将字符串路径转换为 Path 对象
         Path path = Paths.get(folderPath);
         try {
             WatchService watchService = path.getFileSystem().newWatchService();  // 1️⃣ 创建监听器>创建 WatchService 实例（绑定当前文件系统）
             path.register(watchService, ENTRY_CREATE);   // 2️⃣ 注册目录>注册监听事件：ENTRY_CREATE=文件创建；也可监听 ENTRY_DELETE、ENTRY_MODIFY
+
+            // 重点：
+	        // •	executor.execute(() -> { ... }) 是线程池管理的线程，不允许你在内部调用 Thread.currentThread().setDaemon(true)，因为线程池线程已经由 Spring/Java 创建好了。
+	        // •	IllegalThreadStateException 就是告诉你 线程状态不允许修改守护线程属性。
+
             Thread thread = new Thread(() -> {   // 创建独立线程执行监听逻辑（因为 watchService.take() 是阻塞方法，不能占用主线程）
                 try {
                     while (true) { // 无限循环监听（线程未中断前持续运行）

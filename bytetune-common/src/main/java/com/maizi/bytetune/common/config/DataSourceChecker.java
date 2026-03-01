@@ -1,4 +1,4 @@
-package com.maizi.bytetune.starter.config.druid;
+package com.maizi.bytetune.common.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,6 @@ public class DataSourceChecker implements ApplicationListener<ApplicationReadyEv
         log.info("当前数据源类型:{} ", dataSource.getClass().getName());
         log.info("OpenApi页面: http://localhost:8080/redoc/api.html");
         log.info("Druid监控页面: http://localhost:8080/druid/index.html");
-        log.info("Minio监控页面: http://localhost:62471/browser/songs");
+        log.info("Minio监控页面: http://127.0.0.1:9000");
     }
 }

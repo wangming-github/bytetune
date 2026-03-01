@@ -1,4 +1,4 @@
-package com.maizi.bytetune.common.service;
+package com.maizi.bytetune.minio;
 
 import com.maizi.bytetune.common.entity.Song;
 

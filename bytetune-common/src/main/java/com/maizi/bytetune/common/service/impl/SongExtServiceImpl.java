@@ -27,7 +27,7 @@ public class SongExtServiceImpl implements SongExtService {
     public void loadExistingSongs(List<SongFileInfo> files) {
 
         if (files == null || files.isEmpty()) {
-            log.debug("没有需要处理的文件！");
+            log.info("没有需要处理的文件！");
             return;
         }
         // 转换为数据库实体

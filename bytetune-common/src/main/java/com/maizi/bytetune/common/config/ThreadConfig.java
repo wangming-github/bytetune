@@ -1,4 +1,4 @@
-package com.maizi.bytetune.starter;
+package com.maizi.bytetune.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

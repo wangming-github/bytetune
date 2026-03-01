@@ -1,13 +1,10 @@
-package com.maizi.bytetune.starter;
+package com.maizi.bytetune.file;
 
 import com.maizi.bytetune.common.dto.SongFileInfo;
 import com.maizi.bytetune.common.entity.Song;
 import com.maizi.bytetune.common.service.SongExtService;
 import com.maizi.bytetune.common.service.SongService;
 import com.maizi.bytetune.common.util.SongEntityBuilder;
-import com.maizi.bytetune.file.FileProperties;
-import com.maizi.bytetune.file.FolderWatcher;
-import com.maizi.bytetune.file.SongFileScanner;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +31,6 @@ public class StartupScanner {
     SongExtService songExtService;
     @Autowired
     FileProperties fileProperties;
-
     @Autowired
     private TaskExecutor executor;
 
@@ -54,16 +50,16 @@ public class StartupScanner {
      * <p>
      */
     @Bean
-    public CommandLineRunner scanLocalMusic() {
+    public CommandLineRunner initScanner() {
         return args -> {
             executor.execute(() -> {
-                Thread.currentThread().setName("scan-init"); // 给当前线程临时改名
+                Thread.currentThread().setName("init-scan"); // 给当前线程临时改名
                 try {
                     // 异步执行扫描和入库逻辑
                     MDC.put("JOB", "[加载现有文件到数据库]");
                     log.info("加载现有文件到数据库,请稍后...");
                     // 第一次启动项目时扫描文件列表并批量入库数据库
-                    List<SongFileInfo> files = SongFileScanner.scanFolder(fileProperties.getWatchPath());
+                    List<SongFileInfo> files = AudioFileProcessor.scan(fileProperties.getWatchPath());
                     songExtService.loadExistingSongs(files);
                 } catch (Exception e) {
                     log.error("扫描文件夹失败", e);
@@ -72,7 +68,7 @@ public class StartupScanner {
                 }
             });
             // 启动 FolderWatcher 监听指定文件夹，当有新文件创建时，调用当前类的 handleNewFile 方法处理新文件
-            FolderWatcher.watchFolder(fileProperties.getWatchPath(), this::handleNewFile);
+            WatcherFolder.watch(fileProperties.getWatchPath(), this::handleNewFile);
         };
     }
 
@@ -117,7 +113,7 @@ public class StartupScanner {
      */
     private boolean isAudioFile(Path path) {
         try {
-            String mimeType = SongFileScanner.detectMimeType(path.toFile());
+            String mimeType = AudioFileProcessor.detectMimeType(path.toFile());
             return mimeType.startsWith("audio");
         } catch (Exception e) {
             log.error("检测文件类型失败: {}", path.toAbsolutePath(), e);
@@ -129,7 +125,7 @@ public class StartupScanner {
      * 解析 Path 为 Song 实体
      */
     private Song parseSong(Path path) throws Exception {
-        return SongEntityBuilder.toEntity(SongFileScanner.getSongFileInfo(path.toFile()));
+        return SongEntityBuilder.toEntity(AudioFileProcessor.getSongFileInfo(path.toFile()));
     }
 
     /**

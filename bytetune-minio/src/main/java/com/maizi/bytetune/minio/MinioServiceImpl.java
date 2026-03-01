@@ -1,7 +1,6 @@
 package com.maizi.bytetune.minio;
 
 import com.maizi.bytetune.common.entity.Song;
-import com.maizi.bytetune.common.service.MinioService;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import lombok.extern.slf4j.Slf4j;

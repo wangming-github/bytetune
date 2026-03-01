@@ -8,6 +8,7 @@ import com.maizi.bytetune.common.entity.Song;
 import com.maizi.bytetune.common.mapper.SongMapper;
 import com.maizi.bytetune.common.service.SongService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,7 +58,6 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
     @Override
     public void updateMinioStatus(Long id, int status, String bucketName, String objectName) {
         lambdaUpdate().eq(Song::getId, id).set(Song::getStatus, status).set(Song::getBucketName, bucketName).set(Song::getObjectName, objectName).update();
-        log.info("状态更新为:{},完成!", UploadStatus.fromCode(status));
     }
 
 }

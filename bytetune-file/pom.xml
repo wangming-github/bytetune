@@ -32,6 +32,19 @@
             <artifactId>tika-parsers-standard-package</artifactId>
         </dependency>
 
+        <!-- Spring 核心依赖：提供 @Component、@Service、@Autowired 等注解支持，使模块中的 Bean 能被 Spring 容器管理 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
+        <!-- 配置属性处理器（可选）：支持 @ConfigurationProperties 注解，提供 IDE 智能提示和编译时校验，非运行时必需 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -20,7 +20,7 @@ import java.util.List;
  * <p>可用于 ByteTune 项目本地歌曲导入、批量分析等功能。
  */
 @Slf4j
-public class SongFileScanner {
+public class AudioFileProcessor {
     /**
      * Tika 工具实例，用于解析音频文件，线程安全，可复用
      */
@@ -33,7 +33,7 @@ public class SongFileScanner {
      * @return List<SongFileInfo> 包含所有音频文件信息的列表
      * @throws IOException 文件读取或解析异常
      */
-    public static List<SongFileInfo> scanFolder(String folderPath) throws Exception {
+    public static List<SongFileInfo> scan(String folderPath) throws Exception {
         List<SongFileInfo> songs = new ArrayList<>();
         File folder = new File(folderPath);
 
