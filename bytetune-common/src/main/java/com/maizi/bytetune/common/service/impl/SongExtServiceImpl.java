@@ -5,18 +5,18 @@ import com.maizi.bytetune.common.entity.Song;
 import com.maizi.bytetune.common.service.SongExtService;
 import com.maizi.bytetune.common.service.SongService;
 import com.maizi.bytetune.common.util.SongEntityBuilder;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 @Slf4j
+@Service
+@RequiredArgsConstructor // Lombok 的 @RequiredArgsConstructor 会自动生成构造函数：
 public class SongExtServiceImpl implements SongExtService {
 
-    @Autowired
-    SongService songService;
+    private final SongService songService;
 
     /**
      * 加载现有文件到数据库

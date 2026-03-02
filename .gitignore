@@ -38,20 +38,14 @@ build/
 
 # IntelliJ IDEA
 .idea/
-*.iml
 out/
 
 # Maven
-target/
-
 # Logs
+/logs/
 *.log
-
-# Eclipse
-.project
-.classpath
-.settings/
 
 # 临时文件
 *.tmp
 *.swp
+

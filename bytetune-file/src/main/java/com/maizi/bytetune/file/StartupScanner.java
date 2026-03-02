@@ -5,6 +5,7 @@ import com.maizi.bytetune.common.entity.Song;
 import com.maizi.bytetune.common.service.SongExtService;
 import com.maizi.bytetune.common.service.SongService;
 import com.maizi.bytetune.common.util.SongEntityBuilder;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +24,13 @@ import java.util.List;
  */
 @Slf4j
 @Configuration
+@RequiredArgsConstructor
 public class StartupScanner {
 
-    @Autowired
-    SongService songService;
-    @Autowired
-    SongExtService songExtService;
-    @Autowired
-    FileProperties fileProperties;
-    @Autowired
-    private TaskExecutor executor;
+    private final SongService songService;
+    private final SongExtService songExtService;
+    private final FileProperties fileProperties;
+    private final TaskExecutor executor;
 
     // 批量缓存，用于批量入库
     private final List<Song> buffer = new ArrayList<>();

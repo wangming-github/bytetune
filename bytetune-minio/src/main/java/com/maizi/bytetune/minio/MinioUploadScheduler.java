@@ -6,7 +6,6 @@ import com.maizi.bytetune.common.service.SongService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -17,12 +16,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MinioUploadScheduler {
 
-    @Autowired
-    MinioProperties minio;
-    @Autowired
-    SongService songService;
-    @Autowired
-    MinioService minioService;
+    private final MinioProperties minio;
+    private final SongService songService;
+    private final MinioService minioService;
 
     // 每10秒执行一次
     @Scheduled(fixedDelay = 10_000)

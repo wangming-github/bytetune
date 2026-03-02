@@ -3,8 +3,8 @@ package com.maizi.bytetune.minio;
 import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,10 +17,10 @@ import org.springframework.context.annotation.Configuration;
  */
 @Slf4j
 @Configuration
+@RequiredArgsConstructor
 public class MinioConfig {
 
-    @Autowired
-    MinioProperties minio;
+    private final MinioProperties minio;
 
     /**
      * 创建并初始化 MinioClient Bean

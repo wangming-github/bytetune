@@ -16,7 +16,7 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- 启动模块依赖 common/file/minio -->
+        <!-- 启动模块依赖 common/file/minio/mongodb -->
         <dependency>
             <groupId>com.maizi</groupId>
             <artifactId>bytetune-common</artifactId>
@@ -28,6 +28,10 @@
         <dependency>
             <groupId>com.maizi</groupId>
             <artifactId>bytetune-minio</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.maizi</groupId>
+            <artifactId>bytetune-mongodb</artifactId>
         </dependency>
 
         <!-- Spring Boot Web -->

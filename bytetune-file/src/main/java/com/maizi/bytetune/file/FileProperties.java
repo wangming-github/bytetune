@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Data
 @Component
-@ConfigurationProperties(prefix = "bytetune")
+@ConfigurationProperties(prefix = "bytetune-file")
 public class FileProperties {
     /**
      * 扫描目录

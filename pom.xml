@@ -23,6 +23,7 @@
         <druid.version>1.2.27</druid.version>
         <lombok.version>1.18.30</lombok.version>
         <springdoc.version>2.5.0</springdoc.version>
+        <mongodb.version>3.3.5</mongodb.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -59,6 +60,12 @@
             <dependency>
                 <groupId>com.maizi</groupId>
                 <artifactId>bytetune-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>bytetune-mongodb</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -112,6 +119,12 @@
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>${springdoc.version}</version>
             </dependency>
+            <!-- mongodb-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-mongodb</artifactId>
+                <version>${mongodb.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -120,6 +133,7 @@
         <module>bytetune-common</module>
         <module>bytetune-file</module>
         <module>bytetune-minio</module>
+        <module>bytetune-mongodb</module>
         <module>bytetune-starter</module>
     </modules>
 

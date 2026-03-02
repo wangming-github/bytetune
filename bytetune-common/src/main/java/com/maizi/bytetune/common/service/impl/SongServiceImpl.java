@@ -3,12 +3,10 @@ package com.maizi.bytetune.common.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.maizi.bytetune.common.constants.UploadStatus;
 import com.maizi.bytetune.common.entity.Song;
 import com.maizi.bytetune.common.mapper.SongMapper;
 import com.maizi.bytetune.common.service.SongService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.MDC;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
