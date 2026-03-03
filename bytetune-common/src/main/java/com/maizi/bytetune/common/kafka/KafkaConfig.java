@@ -5,7 +5,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.listener.ContainerProperties;
+import org.springframework.kafka.listener.DeadLetterPublishingRecoverer;
+import org.springframework.kafka.listener.DefaultErrorHandler;
+import org.springframework.util.backoff.FixedBackOff;
 
 import javax.swing.*;
 
@@ -17,7 +21,9 @@ import javax.swing.*;
 @RequiredArgsConstructor
 public class KafkaConfig {
 
+    private final KafkaTemplate<String, KafkaSongEventDTO> kafkaTemplate;
     private final ConsumerFactory<String, KafkaSongEventDTO> consumerFactory;
+
 
     // 启动
     // kafk_2 .13 - 4.2 .0 bin / kafka - server - start.sh config / server.properties
@@ -46,6 +52,12 @@ public class KafkaConfig {
 
         // 设置容器属性
         factory.getContainerProperties().setPollTimeout(3000); // 每次 poll 超时时间
+
+        // 配置 DLQ（死信队列）
+        factory.setCommonErrorHandler(new DefaultErrorHandler(
+                new DeadLetterPublishingRecoverer(kafkaTemplate), // 自动把处理失败的消息发送到指定 DLQ Topic
+                new FixedBackOff(1000L, 3) // 重试 3 次，每次间隔 1s
+        ));
 
         // 自定义线程名（日志中显示）
         factory.setContainerCustomizer(container -> {
