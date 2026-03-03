@@ -13,6 +13,16 @@
     <name>bytetune-parent</name>
     <description>父POM管理所有bytetune模块</description>
 
+    <!-- ======================= 模块 ======================= -->
+    <modules>
+        <module>bytetune-starter</module>
+        <module>bytetune-common</module>
+        <module>bytetune-file</module>
+        <module>bytetune-minio</module>
+        <module>bytetune-mongodb</module>
+        <!--        <module>bytetune-kafka</module>-->
+    </modules>
+
     <!-- ======================= 全局属性 ======================= -->
     <properties>
         <java.version>17</java.version>
@@ -39,7 +49,7 @@
     <!-- ======================= 依赖管理 ======================= -->
     <dependencyManagement>
         <dependencies>
-            <!-- ⭐ 关键：管理内部模块版本 -->
+            <!-- ⭐ NO1/4.关键：管理内部模块版本 -->
             <dependency>
                 <groupId>com.maizi</groupId>
                 <artifactId>bytetune-common</artifactId>
@@ -68,6 +78,12 @@
                 <artifactId>bytetune-mongodb</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <!--            <dependency>-->
+            <!--                <groupId>com.maizi</groupId>-->
+            <!--                <artifactId>bytetune-kafka</artifactId>-->
+            <!--                <version>${project.version}</version>-->
+            <!--            </dependency>-->
 
             <!-- Spring Boot 统一依赖版本 -->
             <dependency>
@@ -127,15 +143,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <!-- ======================= 模块 ======================= -->
-    <modules>
-        <module>bytetune-common</module>
-        <module>bytetune-file</module>
-        <module>bytetune-minio</module>
-        <module>bytetune-mongodb</module>
-        <module>bytetune-starter</module>
-    </modules>
 
     <build>
         <pluginManagement>

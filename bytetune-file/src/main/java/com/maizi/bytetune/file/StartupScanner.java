@@ -33,7 +33,7 @@ public class StartupScanner {
     private final TaskExecutor executor;
 
     // 批量缓存，用于批量入库
-    private final List<Song> buffer = new ArrayList<>();
+    private final List<Song> songList = new ArrayList<>();
     private static final int BATCH_SIZE = 5; // 每批次入库数量
 
     /**
@@ -95,8 +95,8 @@ public class StartupScanner {
             }
             log.info("未入库，加入批量缓存等待处理。");
             // 加入批量缓存
-            buffer.add(song);
-            if (buffer.size() >= BATCH_SIZE) {
+            songList.add(song);
+            if (songList.size() >= BATCH_SIZE) {
                 flushBuffer();
             }
         } catch (Exception e) {
@@ -130,10 +130,10 @@ public class StartupScanner {
      * 批量入库缓存中的歌曲
      */
     public void flushBuffer() {
-        if (buffer.isEmpty()) return;
-        songService.saveAll(new ArrayList<>(buffer));
-        log.debug("批量缓存入库完成，数量：{}", buffer.size());
-        buffer.clear();
+        if (songList.isEmpty()) return;
+        songService.saveAll(new ArrayList<>(songList));
+        log.debug("批量缓存入库完成，数量：{}", songList.size());
+        songList.clear();
     }
 
     /**
@@ -144,8 +144,8 @@ public class StartupScanner {
     @Scheduled(fixedDelay = 10_000)
     public void autoFlush() {
         synchronized (this) {
-            if (!buffer.isEmpty()) {
-                log.debug("3秒定时提交触发，当前缓存数量：{}", buffer.size());
+            if (!songList.isEmpty()) {
+                log.debug("3秒定时提交触发，当前缓存数量：{}", songList.size());
                 flushBuffer();
             }
         }

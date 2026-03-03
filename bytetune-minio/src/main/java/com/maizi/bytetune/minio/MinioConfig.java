@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class MinioConfig {
 
-    private final MinioProperties minio;
+    private final MinioConfProperties minio;
 
     /**
      * 创建并初始化 MinioClient Bean

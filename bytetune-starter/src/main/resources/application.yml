@@ -7,6 +7,7 @@ spring:
       - optional:classpath:application-mongodb.yml
       - optional:classpath:application-file.yml
       - optional:classpath:application-minio.yml
+      - optional:classpath:application-kafka.yml
 
 # 也可以在这里覆盖配置
 

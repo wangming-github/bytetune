@@ -3,12 +3,26 @@ spring:
     url: jdbc:mysql://localhost:3306/byte_tune?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
     password: admin123
+    #  druid
     druid:
       web-stat-filter:
         enabled: true
       stat-view-servlet:
         enabled: true
+  #kafka
+  kafka:
+    bootstrap-servers: localhost:9092   # Kafka Broker 地址
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      group-id: song-upload-group
+      properties:
+        spring.json.trusted.packages: "*"  # 允许反序列化 DTO
 
+#mybatis-plus
 mybatis-plus:
   #  classpath*:mapper/**/*.xml → 扫描 resources/mapper/ 下所有 XML，包括子目录
   mapper-locations: classpath*:mapper/**/*.xml
@@ -18,3 +32,4 @@ mybatis-plus:
   #    type-aliases-package: com.bytetune.common.entity,com.maizi.bytetune.mongodb,com.maizi.bytetune.file.entity
   #  configuration:
   #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+

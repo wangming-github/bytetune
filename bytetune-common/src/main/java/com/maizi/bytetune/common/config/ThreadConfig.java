@@ -30,7 +30,7 @@ public class ThreadConfig {
     public ThreadPoolTaskScheduler taskScheduler() {
         ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
         scheduler.setPoolSize(5);// 设置线程池大小，根据你的定时任务数量和并发情况调整
-        scheduler.setThreadNamePrefix("Scheduler-"); // 设置线程名前缀，日志中线程名将显示为 -MyScheduler-1、-MyScheduler-2 等
+        scheduler.setThreadNamePrefix("Task-"); // 设置线程名前缀，日志中线程名将显示为 -MyScheduler-1、-MyScheduler-2 等
         scheduler.setDaemon(false);  // 是否使用守护线程，false 表示非守护线程，JVM 退出前会等待任务完成
         return scheduler;  // 初始化线程池
     }

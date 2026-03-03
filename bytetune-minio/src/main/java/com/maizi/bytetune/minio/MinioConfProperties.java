@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @ConfigurationProperties(prefix = "bytetune-minio")
-public class MinioProperties {
+public class MinioConfProperties {
 
     private String endpoint;
     private String accessKey;

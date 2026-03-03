@@ -47,7 +47,7 @@ public class SongEntityBuilder {
                 .size(f.getSize())                  // 文件大小（字节）
                 .md5(f.getMd5())                    // 文件 MD5，用于去重
                 .path(f.getAbsolutePath())          // 文件绝对路径
-                .status(UploadStatus.NOT_UPLOADED.getCode())  // 上传状态
+                .status(UploadStatus.NOT_UPLOADED.getCode())  // 上传状态,初始未上传
                 .createdAt(now)                     //  时间字段 
                 .updatedAt(now)                     //  时间字段
                 //  MinIO 上传信息

@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true">
-
 <!-- 日志存放路径 -->
 <property name="LOG_PATH" value="logs"/>
 
-<!-- 控制台日志 -->
+<!-- Root 日志 	全局日志默认DEBUG，会影响所有未单独配置 logger 的类-->
+<root level="DEBUG">
+    <appender-ref ref="Console"/>
+    <appender-ref ref="File"/>
+</root>
+
+    <!-- 控制台输出 info -->
 <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
         <pattern>
-            %d{yyyy-MM-dd HH:mm:ss.SSS} %-10thread %-5level %logger{36} %replace(%X){'\[songId=.*?\]|\[batchId=.*?\]|\[job=.*?\]', ''} - %msg%n
+            %d{yyyy-MM-dd HH:mm:ss.SSS} %-14thread %-5level %logger{36} %replace(%X){'\[songId=.*?\]|\[batchId=.*?\]|\[job=.*?\]', ''} - %msg%n
         </pattern>
     </encoder>
+    <!-- 这里可以单独设置控制台日志级别 -->
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+        <level>INFO</level>
+    </filter>
 </appender>
 
 <!-- 文件日志，按日期 + 大小滚动 -->
@@ -28,19 +37,14 @@
     </encoder>
 </appender>
 
-<!-- Root 日志 -->
-<root level="INFO">
-    <appender-ref ref="Console"/>
-    <appender-ref ref="File"/>
-</root>
-
 <!-- 包级别日志 -->
 <logger name="com.bytetune" level="DEBUG"/>
 <logger name="com.bytetune.mapper" level="INFO"/>
 <logger name="org.springframework" level="WARN"/>
 <logger name="org.mongodb" level="INFO"/>
 <logger name="com.alibaba.druid" level="INFO"/>
-
+<logger name="org.apache.kafka" level="WARN"/>
+<logger name="org.springframework.kafka" level="WARN"/>
 <!-- 异常捕获日志（可选） -->
 <logger name="ERROR_LOG" level="ERROR" additivity="false">
     <appender-ref ref="File"/>

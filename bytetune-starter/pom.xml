@@ -16,6 +16,7 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!-- ⭐ NO2/4.在需要引入该模块的地方引入-->
         <!-- 启动模块依赖 common/file/minio/mongodb -->
         <dependency>
             <groupId>com.maizi</groupId>
@@ -33,6 +34,10 @@
             <groupId>com.maizi</groupId>
             <artifactId>bytetune-mongodb</artifactId>
         </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.maizi</groupId>-->
+        <!--            <artifactId>bytetune-kafka</artifactId>-->
+        <!--        </dependency>-->
 
         <!-- Spring Boot Web -->
         <dependency>

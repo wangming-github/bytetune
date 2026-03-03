@@ -22,6 +22,9 @@ public class DataSourceListener implements ApplicationListener<ApplicationReadyE
         log.info("当前数据源类型:{} ", dataSource.getClass().getName());
         log.info("OpenApi页面: http://localhost:8080/redoc/api.html");
         log.info("Druid监控页面: http://localhost:8080/druid/index.html");
-        log.info("Minio监控页面: http://127.0.0.1:9000");
+        log.info("Minio监控页面: http://127.0.0.1:9000  minioadmin/minioadmin");
+        log.info("Minio启动脚本: /Users/zimai/Documents/dev/tools_脚本工具/Minio/start-minio.sh");
+        log.info("Kafka安装位置: /Users/zimai/Documents/dev/env/kafka/kafka_2.13-4.2.0");
+        log.info("Kafka启动命令: bin/kafka-server-start.sh config/server.properties &");
     }
 }
