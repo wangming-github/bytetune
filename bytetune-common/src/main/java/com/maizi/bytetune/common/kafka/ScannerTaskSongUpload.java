@@ -21,7 +21,7 @@ import java.util.List;
 public class ScannerTaskSongUpload {
 
     private final SongService songService;
-    private final SongEventPublisher eventPublisher;
+    private final KafkaSongEventPublisher eventPublisher;
 
     /**
      * 每 30 秒执行一次扫描

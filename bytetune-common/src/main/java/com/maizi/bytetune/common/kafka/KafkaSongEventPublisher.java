@@ -21,7 +21,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class SongEventPublisher {
+public class KafkaSongEventPublisher {
 
     private final KafkaTemplate<String, KafkaSongEventDTO> kafkaTemplate;
 

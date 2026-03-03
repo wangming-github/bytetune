@@ -15,7 +15,7 @@ import java.util.List;
  * 只做对象转换，不做业务逻辑
  */
 @Component
-public class SongEventAssembler {
+public class KafkaSongEventAssembler {
 
     /**
      * 批量转换实体为事件对象

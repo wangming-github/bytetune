@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.maizi.bytetune.common.constants.UploadStatus;
-import com.maizi.bytetune.common.kafka.SongEventAssembler;
+import com.maizi.bytetune.common.kafka.KafkaSongEventAssembler;
 import com.maizi.bytetune.common.kafka.KafkaSongEventDTO;
 import com.maizi.bytetune.common.entity.Song;
 import com.maizi.bytetune.common.mapper.SongMapper;
@@ -31,7 +31,7 @@ import java.util.List;
 public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements SongService {
 
     private final SongMapper songMapper;
-    private final SongEventAssembler assembler;
+    private final KafkaSongEventAssembler assembler;
 
     @Override
     @Transactional
