@@ -5,5 +5,5 @@ import com.maizi.bytetune.common.entity.Song;
 public interface MinioService {
     boolean uploadToMinio(Song song, String objectName);
 
-    void uploadToMinioAndUpdateState(Song song);
+    boolean uploadToMinioAndUpdateState(Song song);
 }

@@ -1,26 +1,23 @@
+server:
+  port: 8080
+
 spring:
   config:
     import:
       # 多个YAML 会 按顺序加载，后面的会覆盖前面的同名属性
       # 加“optional:” IDEA 就不会强制校验存在。
+      # 也可以在本文件覆盖[application-***.yml]的配置
       - optional:classpath:application-common.yml
       - optional:classpath:application-mongodb.yml
       - optional:classpath:application-file.yml
       - optional:classpath:application-minio.yml
-      - optional:classpath:application-kafka.yml
-
-# 也可以在这里覆盖配置
-
-server:
-  port: 8080
-
 
 #  1️⃣ Spring Boot 的日志加载顺序
-#
 #  Spring Boot 会按这个顺序初始化日志（从高到低覆盖）：
 #  1.	logback-spring.xml / logback-spring.groovy（如果存在，优先级最高）
 #  2.	application.yml / application.properties 中的 logging.level.* 配置
 #  3.	默认 Spring Boot 日志配置
+
 
 # JSON 文档：http://localhost:8080/v3/api-docs
 # redoc文档 http://localhost:8080/redoc/api.html

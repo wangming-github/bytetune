@@ -19,6 +19,8 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       # 消息 Value 的序列化方式，这里用 JSON 序列化 DTO
     consumer:
+      enable-auto-commit: false   # 关闭自动提交 offset
+      auto-offset-reset: earliest # 消费者第一次启动从最早消息开始
       group-id: bytetune-kafka-group    # 消费者组 ID，同组的消费者共享分区消费进度
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       # 消息 Key 的反序列化方式

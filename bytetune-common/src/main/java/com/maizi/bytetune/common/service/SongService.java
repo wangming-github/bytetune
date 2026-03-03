@@ -33,7 +33,7 @@ public interface SongService extends IService<Song> {
 
     List<Song> selectUnUploaded(int batchSize);
 
-    void updateMinioStatus(Long id, int status, String bucketName, String objectName);
+    boolean updateMinioStatus(Long id, int status, String bucketName, String objectName);
 
     List<KafkaSongEventDTO> loadPendingUploadEvents();
 }

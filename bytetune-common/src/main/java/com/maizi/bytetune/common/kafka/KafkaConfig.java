@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
+import org.springframework.kafka.listener.ContainerProperties;
+
+import javax.swing.*;
 
 /**
  * Kafka 消费者容器配置
@@ -32,6 +35,11 @@ public class KafkaConfig {
         ConcurrentKafkaListenerContainerFactory<String, KafkaSongEventDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
 
         factory.setConsumerFactory(consumerFactory);
+
+       /*  setAckMode 【容器提交策略是否注入 Ack 对象】 【AckMode 是核心，决定 Spring 是否允许手动 ack】
+           application-common.yml 【Kafka客户端默认提交行为】【enable-auto-commit 是客户端保险开关，防止 Kafka 自动提交 offset】 */
+        // 设置手动提交 offset
+        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
 
         // 设置并发线程数
         factory.setConcurrency(1);

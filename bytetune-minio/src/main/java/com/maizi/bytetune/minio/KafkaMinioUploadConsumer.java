@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MinioUploadConsumer {
+public class KafkaMinioUploadConsumer {
 
     private final MinioService minioService;
     private final SongMapper songMapper;
@@ -29,7 +30,7 @@ public class MinioUploadConsumer {
      * @param event 消息对象
      */
     @KafkaListener(topics = "${bytetune.kafka.topic.name}")// groupId已经全局配置
-    public void consume(KafkaSongEventDTO event) {
+    public void consume(KafkaSongEventDTO event, Acknowledgment ack) {
         MDC.put("job", "[消费消息→上传文件→修改状态]");
         // 打印消息
         log.info("收到 Kafka 消息 ObjectName: {}", event.getSongName());
@@ -40,6 +41,12 @@ public class MinioUploadConsumer {
             log.info("已上传成功，跳过 id={}", song.getId());
             return;
         }
-        minioService.uploadToMinioAndUpdateState(song);
+        if (minioService.uploadToMinioAndUpdateState(song)) {
+            ack.acknowledge();// 成功后手动提交 offset
+            log.info("消息已处理并提交 offset:[{}]", event.getSongName());
+        } else {
+            log.warn("上传/修改状态，失败。稍后重试...");
+            // 这里不调用 ack.acknowledge()，Kafka 会保留 offset，下次重新消费
+        }
     }
 }

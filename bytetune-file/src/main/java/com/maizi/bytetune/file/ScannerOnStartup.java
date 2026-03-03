@@ -92,7 +92,7 @@ public class ScannerOnStartup {
                 log.info("文件已入库");
                 return;
             }
-            log.info("未入库，加入批量缓存等待处理。");
+            log.debug("未入库，加入批量缓存等待处理。");
             // 加入批量缓存
             songList.add(song);
             if (songList.size() >= BATCH_SIZE) {
@@ -144,7 +144,7 @@ public class ScannerOnStartup {
     public void autoFlush() {
         synchronized (this) {
             if (!songList.isEmpty()) {
-                log.debug("3秒定时提交触发，当前缓存数量：{}", songList.size());
+                log.info("定时提交触发，保存当前缓存，数量：{}", songList.size());
                 flushBuffer();
             }
         }

@@ -63,8 +63,13 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
     }
 
     @Override
-    public void updateMinioStatus(Long id, int status, String bucketName, String objectName) {
-        lambdaUpdate().eq(Song::getId, id).set(Song::getStatus, status).set(Song::getBucketName, bucketName).set(Song::getObjectName, objectName).update();
+    public boolean updateMinioStatus(Long id, int status, String bucketName, String objectName) {
+        return lambdaUpdate()
+                .eq(Song::getId, id)
+                .set(Song::getStatus, status)
+                .set(Song::getBucketName, bucketName)
+                .set(Song::getObjectName, objectName)
+                .update();
     }
 
     /**
