@@ -18,7 +18,7 @@ import java.util.Map;
  * 生成的文档可在 Swagger UI 或 ReDoc 中访问。
  */
 @Configuration
-public class ApiConfig {
+public class ConfigOpenApi {
 
     /**
      * 自定义 OpenAPI Bean

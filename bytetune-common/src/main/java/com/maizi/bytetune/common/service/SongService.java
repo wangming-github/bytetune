@@ -1,6 +1,7 @@
 package com.maizi.bytetune.common.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.maizi.bytetune.common.kafka.KafkaSongEventDTO;
 import com.maizi.bytetune.common.entity.Song;
 
 import java.util.List;
@@ -34,4 +35,5 @@ public interface SongService extends IService<Song> {
 
     void updateMinioStatus(Long id, int status, String bucketName, String objectName);
 
+    List<KafkaSongEventDTO> loadPendingUploadEvents();
 }

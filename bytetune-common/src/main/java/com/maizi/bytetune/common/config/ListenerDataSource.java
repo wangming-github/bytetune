@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 @Component
 @Order(99)
 @RequiredArgsConstructor
-public class DataSourceListener implements ApplicationListener<ApplicationReadyEvent> {
+public class ListenerDataSource implements ApplicationListener<ApplicationReadyEvent> {
 
     private final DataSource dataSource;
 

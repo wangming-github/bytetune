@@ -47,9 +47,6 @@ public class MinioServiceImpl implements MinioService {
      */
     @Override
     public void uploadToMinioAndUpdateState(Song song) {
-
-        MDC.put("songId", "[" + song.getName() + "]");
-        MDC.put("job", "[上传]");
         String objectName = "audio/" + song.getName();
         // 上传并获取状态 更新数据库
         int status = uploadToMinio(song, objectName) ? UploadStatus.SUCCESS.getCode() : UploadStatus.FAILED.getCode();

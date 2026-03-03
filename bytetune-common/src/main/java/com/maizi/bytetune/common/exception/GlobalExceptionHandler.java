@@ -1,7 +1,5 @@
 package com.maizi.bytetune.common.exception;
 
-import com.maizi.bytetune.common.dto.R;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**

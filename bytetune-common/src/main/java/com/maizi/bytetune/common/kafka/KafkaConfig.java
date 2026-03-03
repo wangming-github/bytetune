@@ -1,6 +1,5 @@
-package com.maizi.bytetune.common.config;
+package com.maizi.bytetune.common.kafka;
 
-import com.maizi.bytetune.common.dto.SongUploadEventDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,15 +14,22 @@ import org.springframework.kafka.core.ConsumerFactory;
 @RequiredArgsConstructor
 public class KafkaConfig {
 
-    private final ConsumerFactory<String, SongUploadEventDTO> consumerFactory;
+    private final ConsumerFactory<String, KafkaSongEventDTO> consumerFactory;
+
+    // 启动
+    // kafk_2 .13 - 4.2 .0 bin / kafka - server - start.sh config / server.properties
+    // 发送测试消息a
+    // ./bin/kafka-console-producer.sh --topic song-upload-group --bootstrap-server localhost:9092
+    // 接收测试消息
+    // ./bin/kafka-console-consumer.sh --topic song-upload-group --bootstrap-server localhost:9092 --from-beginning
 
     /**
      * KafkaListener 容器工厂
      * 可用于 @KafkaListener 注入
      */
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, SongUploadEventDTO> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, SongUploadEventDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, KafkaSongEventDTO> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, KafkaSongEventDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
 
         factory.setConsumerFactory(consumerFactory);
 

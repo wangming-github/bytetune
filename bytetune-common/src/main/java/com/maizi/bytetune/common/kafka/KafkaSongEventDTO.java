@@ -1,4 +1,4 @@
-package com.maizi.bytetune.common.dto;
+package com.maizi.bytetune.common.kafka;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SongUploadEventDTO {
+public class KafkaSongEventDTO {
     /**
      * 歌曲唯一ID，消费端用来保证幂等性。
      */

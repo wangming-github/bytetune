@@ -1,4 +1,4 @@
-package com.maizi.bytetune.common.config;
+package com.maizi.bytetune.common.filter;
 
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.proxy.jdbc.JdbcParameter;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Slf4j
 @Configuration
-public class DruidFilter extends StatFilter {
+public class FilterDruidSQLPrinter extends StatFilter {
 
     // 查询后执行，适用于 SELECT 等返回 ResultSet 的语句
     @Override

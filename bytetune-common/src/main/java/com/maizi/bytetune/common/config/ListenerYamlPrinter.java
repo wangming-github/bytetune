@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Order(1)
 @Component
 @RequiredArgsConstructor
-public class YamlPrinterListener implements ApplicationListener<ApplicationReadyEvent> {
+public class ListenerYamlPrinter implements ApplicationListener<ApplicationReadyEvent> {
 
     private final ConfigurableEnvironment environment;
 

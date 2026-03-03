@@ -1,6 +1,6 @@
 package com.maizi.bytetune.starter.controller;
 
-import com.maizi.bytetune.common.dto.R;
+import com.maizi.bytetune.common.util.R;
 import com.maizi.bytetune.mongodb.Lyric;
 import com.maizi.bytetune.mongodb.LyricService;
 import io.swagger.v3.oas.annotations.Operation;

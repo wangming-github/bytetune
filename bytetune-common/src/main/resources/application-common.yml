@@ -11,16 +11,21 @@ spring:
         enabled: true
   #kafka
   kafka:
-    bootstrap-servers: localhost:9092   # Kafka Broker 地址
+    bootstrap-servers: localhost:9092   # Kafka Broker 地址，Producer/Consumer 用来连接 Kafka 的节点
     producer:
+      client-id: bytetune-kafka-client  # 生产者客户端 ID，用于标识生产者线程和日志
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 消息 Key 的序列化方式，通常用 StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      # 消息 Value 的序列化方式，这里用 JSON 序列化 DTO
     consumer:
+      group-id: bytetune-kafka-group    # 消费者组 ID，同组的消费者共享分区消费进度
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # 消息 Key 的反序列化方式
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      group-id: song-upload-group
+      # 消息 Value 的反序列化方式，配合 JsonSerializer 使用
       properties:
-        spring.json.trusted.packages: "*"  # 允许反序列化 DTO
+        spring.json.trusted.packages: "*"  # 允许反序列化 DTO 的包，* 表示信任所有包
 
 #mybatis-plus
 mybatis-plus:
@@ -33,3 +38,9 @@ mybatis-plus:
   #  configuration:
   #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+
+# kafka队列名
+bytetune:
+  kafka:
+    topic:
+      name: bytetune

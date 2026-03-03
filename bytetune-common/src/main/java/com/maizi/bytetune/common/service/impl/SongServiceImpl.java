@@ -3,13 +3,18 @@ package com.maizi.bytetune.common.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.maizi.bytetune.common.constants.UploadStatus;
+import com.maizi.bytetune.common.kafka.SongEventAssembler;
+import com.maizi.bytetune.common.kafka.KafkaSongEventDTO;
 import com.maizi.bytetune.common.entity.Song;
 import com.maizi.bytetune.common.mapper.SongMapper;
 import com.maizi.bytetune.common.service.SongService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,7 +27,11 @@ import java.util.List;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements SongService {
+
+    private final SongMapper songMapper;
+    private final SongEventAssembler assembler;
 
     @Override
     @Transactional
@@ -56,6 +65,29 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
     @Override
     public void updateMinioStatus(Long id, int status, String bucketName, String objectName) {
         lambdaUpdate().eq(Song::getId, id).set(Song::getStatus, status).set(Song::getBucketName, bucketName).set(Song::getObjectName, objectName).update();
+    }
+
+    /**
+     * 加载待上传的歌曲，并转换为事件 DTO
+     *
+     * @return 需要发送到 Kafka 的事件列表
+     */
+    @Override
+    public List<KafkaSongEventDTO> loadPendingUploadEvents() {
+
+        // 查询状态为 未上传 或 失败 的数据
+        List<Song> songs = songMapper.selectList(//
+                new LambdaQueryWrapper<Song>()//
+                        .in(Song::getStatus, //
+                                UploadStatus.NOT_UPLOADED.getCode(),//
+                                UploadStatus.FAILED.getCode()));
+
+        if (songs.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        // 转换为事件对象
+        return assembler.toEvents(songs);
     }
 
 }

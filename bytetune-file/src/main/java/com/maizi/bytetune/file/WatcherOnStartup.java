@@ -46,7 +46,7 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
  * ==============================================================
  */
 @Slf4j
-public class WatcherFolder {
+public class WatcherOnStartup {
     /* LoggerFactory */
 
     /**

@@ -35,7 +35,7 @@ public class SongExtServiceImpl implements SongExtService {
         log.info("现有的文件数量：{}", songs.size());
         // 过滤已经存在的歌曲（path + md5）
         List<Song> newSongs = songs.stream().filter(song -> !songService.existsByFile(song.getPath(), song.getMd5())).toList();
-        log.info("过滤已经存在的歌曲，未入库数量：{}", newSongs.size());
+        log.debug("过滤已经存在的歌曲，未入库数量：{}", newSongs.size());
 
         if (newSongs.isEmpty()) {
             log.info("无现有的文件数据需要导入！");

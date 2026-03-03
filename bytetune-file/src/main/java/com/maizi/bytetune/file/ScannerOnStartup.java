@@ -8,7 +8,6 @@ import com.maizi.bytetune.common.util.SongEntityBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +24,7 @@ import java.util.List;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-public class StartupScanner {
+public class ScannerOnStartup {
 
     private final SongService songService;
     private final SongExtService songExtService;
@@ -48,7 +47,7 @@ public class StartupScanner {
      * <p>
      */
     @Bean
-    public CommandLineRunner initScanner() {
+    public CommandLineRunner init() {
         return args -> {
             executor.execute(() -> {
                 Thread.currentThread().setName("init-scan"); // 给当前线程临时改名
@@ -66,7 +65,7 @@ public class StartupScanner {
                 }
             });
             // 启动 FolderWatcher 监听指定文件夹，当有新文件创建时，调用当前类的 handleNewFile 方法处理新文件
-            WatcherFolder.watch(fileProperties.getWatchPath(), this::handleNewFile);
+            WatcherOnStartup.watch(fileProperties.getWatchPath(), this::handleNewFile);
         };
     }
 
