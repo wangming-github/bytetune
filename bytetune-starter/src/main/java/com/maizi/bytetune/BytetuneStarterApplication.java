@@ -8,10 +8,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableAsync
 @EnableScheduling // 启用 Spring 定时任务
-@SpringBootApplication(scanBasePackages = "com.maizi.bytetune")
+@SpringBootApplication(//
+        scanBasePackages = "com.maizi.bytetune" //
+        //,  exclude = org.springframework.boot.actuate.autoconfigure.tracing.BraveAutoConfiguration.class//
+)//
 @ConfigurationPropertiesScan("com.maizi.bytetune")
 public class BytetuneStarterApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(BytetuneStarterApplication.class, args);
     }

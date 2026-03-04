@@ -1,0 +1,11 @@
+management:
+  tracing:
+    enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,health,info
+  endpoint:
+    prometheus:
+      enabled: true
+

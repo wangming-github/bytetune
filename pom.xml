@@ -20,7 +20,7 @@
         <module>bytetune-file</module>
         <module>bytetune-minio</module>
         <module>bytetune-mongodb</module>
-        <!--        <module>bytetune-kafka</module>-->
+        <module>bytetune-observe</module>
     </modules>
 
     <!-- ======================= 全局属性 ======================= -->
@@ -72,18 +72,16 @@
                 <artifactId>bytetune-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.maizi</groupId>
                 <artifactId>bytetune-mongodb</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>bytetune-observe</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
-            <!--            <dependency>-->
-            <!--                <groupId>com.maizi</groupId>-->
-            <!--                <artifactId>bytetune-kafka</artifactId>-->
-            <!--                <version>${project.version}</version>-->
-            <!--            </dependency>-->
 
             <!-- Spring Boot 统一依赖版本 -->
             <dependency>

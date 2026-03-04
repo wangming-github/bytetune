@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationEventPublisher;
 @SpringBootTest
 public class ApplicationEventPublisherTest {
 
+    // 解耦模块之间的调用关系。不是 MQ，不保证可靠投递，不跨进程。⚙️
     @Autowired
     private ApplicationEventPublisher publisher;
 

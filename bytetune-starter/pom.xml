@@ -34,10 +34,6 @@
             <groupId>com.maizi</groupId>
             <artifactId>bytetune-mongodb</artifactId>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>com.maizi</groupId>-->
-        <!--            <artifactId>bytetune-kafka</artifactId>-->
-        <!--        </dependency>-->
 
         <!-- Spring Boot Web -->
         <dependency>
@@ -57,7 +53,6 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>

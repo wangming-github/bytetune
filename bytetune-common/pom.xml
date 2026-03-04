@@ -17,6 +17,11 @@
 
     <dependencies>
 
+        <!--        <dependency>-->
+        <!--            <groupId>com.maizi</groupId>-->
+        <!--            <artifactId>bytetune-observe</artifactId>-->
+        <!--        </dependency>-->
+
         <!-- MyBatis-Plus -->
         <dependency>
             <groupId>com.baomidou</groupId>

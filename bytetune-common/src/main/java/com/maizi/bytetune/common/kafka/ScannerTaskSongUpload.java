@@ -37,8 +37,9 @@ public class ScannerTaskSongUpload {
             log.debug("未发现需要上传的歌曲");
             return;
         }
+        log.info("扫描到{}条没有上传的数据。", events.size());
         // 批量发送消息
         eventPublisher.publishBatch(events);
-        log.info("本次扫描完成，发送 {} 条消息", events.size());
+
     }
 }

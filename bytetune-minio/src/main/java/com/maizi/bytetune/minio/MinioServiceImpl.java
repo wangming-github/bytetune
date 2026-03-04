@@ -36,7 +36,7 @@ public class MinioServiceImpl implements MinioService {
             log.info("上传minio成功!");
             return true;
         } catch (Exception e) {
-            log.error("上传失败: {}", e.getMessage());
+            log.warn("上传失败: {}", e.getMessage());
             return false;
         }
     }
