@@ -1,5 +1,34 @@
-HELP.md
+# Maven
 target/
+*.log
+*.class
+*.jar
+*.war
+*.ear
+
+# IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# 日志
+logs/
+archived/
+
+# 各模块可能的本地配置
+*.yml.local
+*.properties.local
+/.mvn/
+
+
+HELP.md
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -15,9 +44,6 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
-*.iws
-*.iml
-*.ipr
 
 ### NetBeans ###
 /nbproject/private/
@@ -30,22 +56,3 @@ build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/
-
-
-# macOS 系统文件
-.DS_Store
-
-# IntelliJ IDEA
-.idea/
-out/
-
-# Maven
-# Logs
-/logs/
-*.log
-
-# 临时文件
-*.tmp
-*.swp
-

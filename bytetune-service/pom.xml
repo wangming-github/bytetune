@@ -1,0 +1,60 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.maizi</groupId>
+        <artifactId>bytetune</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <modules>
+        <module>bytetune-starter</module>
+        <module>bytetune-common</module>
+        <module>bytetune-file</module>
+        <module>bytetune-minio</module>
+        <module>bytetune-mongodb</module>
+        <module>bytetune-observe</module>
+    </modules>
+
+    <artifactId>bytetune-service</artifactId><!--Maven 会把这个模块当作artifactId 识别。-->
+    <name>bytetune-service-父亲</name><!--模块一个可读名字，用于显示、文档、IDE、Maven 输出等。-->
+    <description>父模块，管理 bytetune-service 下的所有子模块</description>
+    <packaging>pom</packaging> <!--如果 bytetune-starter 是父模块（管理基础模块和版本），把 packaging 改成 pom。-->
+
+    <dependencyManagement>
+        <dependencies>
+            <!--本地包版本管理-->
+            <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>bytetune-starter</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>bytetune-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>bytetune-file</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>bytetune-minio</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>bytetune-mongodb</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

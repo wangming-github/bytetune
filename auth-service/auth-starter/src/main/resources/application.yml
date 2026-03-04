@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: auth-starter
+
+server:
+  port: 8081

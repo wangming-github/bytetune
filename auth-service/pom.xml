@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 父 POM -->
+    <parent>
+        <groupId>com.maizi</groupId>
+        <artifactId>bytetune</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>auth-service</artifactId>
+    <name>auth-service-父亲</name>
+    <description>父模块，管理 auth-service 下的所有子模块</description>
+    <packaging>pom</packaging><!--packaging=pom 表示 auth-service 只是管理子模块，不生成 jar-->
+
+    <modules>
+        <module>auth-starter</module>
+        <module>auth-api</module>
+        <module>auth-core</module>
+        <module>auth-domain</module>
+        <module>auth-util</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--本地包版本管理-->
+            <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>auth-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>auth-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>auth-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>auth-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>auth-util</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

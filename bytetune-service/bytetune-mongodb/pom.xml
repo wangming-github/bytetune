@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.maizi</groupId>
+        <artifactId>bytetune-service</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>bytetune-mongodb</artifactId>
+    <packaging>jar</packaging><!--基础模块可以用 jar-->
+
+    <dependencies>
+        <!-- 依赖common模块 -->
+        <dependency>
+            <groupId>com.maizi</groupId>
+            <artifactId>bytetune-common</artifactId>
+        </dependency>
+        <!-- Spring 核心依赖：提供 @Component、@Service、@Autowired 等注解支持，使模块中的 Bean 能被 Spring 容器管理 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <!-- 配置属性处理器（可选）：支持 @ConfigurationProperties 注解，提供 IDE 智能提示和编译时校验，非运行时必需 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--mongodb-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -10,17 +10,12 @@
     <artifactId>bytetune</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>bytetune-parent</name>
-    <description>父POM管理所有bytetune模块</description>
-
+    <description>父POM管理 bytetune模块和auth-service模块</description>
+    <name>bytetune-祖父</name>
     <!-- ======================= 模块 ======================= -->
     <modules>
-        <module>bytetune-starter</module>
-        <module>bytetune-common</module>
-        <module>bytetune-file</module>
-        <module>bytetune-minio</module>
-        <module>bytetune-mongodb</module>
-        <module>bytetune-observe</module>
+        <module>auth-service</module>
+        <module>bytetune-service</module>
     </modules>
 
     <!-- ======================= 全局属性 ======================= -->
@@ -42,6 +37,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -49,37 +45,15 @@
     <!-- ======================= 依赖管理 ======================= -->
     <dependencyManagement>
         <dependencies>
-            <!-- ⭐ NO1/4.关键：管理内部模块版本 -->
             <dependency>
                 <groupId>com.maizi</groupId>
-                <artifactId>bytetune-common</artifactId>
+                <artifactId>bytetune-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.maizi</groupId>
-                <artifactId>bytetune-file</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.maizi</groupId>
-                <artifactId>bytetune-minio</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.maizi</groupId>
-                <artifactId>bytetune-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.maizi</groupId>
-                <artifactId>bytetune-mongodb</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.maizi</groupId>
-                <artifactId>bytetune-observe</artifactId>
+                <artifactId>auth-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -120,13 +94,7 @@
                 <artifactId>druid-spring-boot-3-starter</artifactId>
                 <version>${druid.version}</version>
             </dependency>
-            <!-- Lombok -->
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-                <scope>provided</scope>
-            </dependency>
+
             <!-- Springdoc OpenAPI -->
             <dependency>
                 <groupId>org.springdoc</groupId>
@@ -134,6 +102,7 @@
                 <version>${springdoc.version}</version>
             </dependency>
             <!-- mongodb-->
+            <!-- Spring Boot starter 不建议直接指定版本（最好让 Spring Boot BOM 管理），否则可能和 Spring Boot 版本不一致。-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-mongodb</artifactId>

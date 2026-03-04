@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.maizi</groupId>
+        <artifactId>bytetune-service</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>bytetune-starter</artifactId>
+    <packaging>jar</packaging><!--基础模块可以用 jar-->
+
+    <dependencies>
+        <!-- 服务启动模块bytetune-service依赖 bytetune-common/file/minio/mongodb -->
+        <dependency>
+            <groupId>com.maizi</groupId>
+            <artifactId>bytetune-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.maizi</groupId>
+            <artifactId>bytetune-file</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.maizi</groupId>
+            <artifactId>bytetune-minio</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.maizi</groupId>
+            <artifactId>bytetune-mongodb</artifactId>
+        </dependency>
+
+        <!-- Spring Boot Web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- Springdoc OpenAPI -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        </dependency>
+        <!-- 测试 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
