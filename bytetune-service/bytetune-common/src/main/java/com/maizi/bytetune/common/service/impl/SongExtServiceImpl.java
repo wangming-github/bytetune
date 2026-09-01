@@ -1,7 +1,9 @@
 package com.maizi.bytetune.common.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.maizi.bytetune.common.dto.SongFileInfo;
 import com.maizi.bytetune.common.entity.Song;
+import com.maizi.bytetune.common.mapper.SongMapper;
 import com.maizi.bytetune.common.service.SongExtService;
 import com.maizi.bytetune.common.service.SongService;
 import com.maizi.bytetune.common.util.SongEntityBuilder;
@@ -14,7 +16,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor // Lombok 的 @RequiredArgsConstructor 会自动生成构造函数：
-public class SongExtServiceImpl implements SongExtService {
+public class SongExtServiceImpl extends ServiceImpl<SongMapper, Song> implements SongExtService {
 
     private final SongService songService;
 

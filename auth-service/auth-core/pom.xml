@@ -16,6 +16,14 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <dependency>
+            <groupId>com.maizi</groupId>
+            <artifactId>auth-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.maizi</groupId>
+            <artifactId>auth-util</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

@@ -54,7 +54,7 @@ public class ScannerOnStartup {
                 try {
                     // 异步执行扫描和入库逻辑
                     MDC.put("JOB", "[加载现有文件到数据库]");
-                    log.info("加载现有文件到数据库,请稍后...");
+                    log.info("⏳加载现有文件到数据库,请稍后...⏳");
                     // 第一次启动项目时扫描文件列表并批量入库数据库
                     List<SongFileInfo> files = AudioFileProcessor.scan(fileProperties.getWatchPath());
                     songExtService.loadExistingSongs(files);

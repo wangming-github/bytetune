@@ -17,6 +17,23 @@
     <packaging>jar</packaging>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.maizi</groupId>
+            <artifactId>auth-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.maizi</groupId>
+            <artifactId>auth-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.maizi</groupId>
+            <artifactId>auth-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.maizi</groupId>
+            <artifactId>auth-util</artifactId>
+        </dependency>
         <!-- Spring Boot Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -32,6 +49,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <!--aop-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
     </dependencies>
 

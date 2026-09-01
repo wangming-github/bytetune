@@ -29,7 +29,6 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements SongService {
-
     private final SongMapper songMapper;
     private final KafkaSongEventAssembler assembler;
 

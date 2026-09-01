@@ -42,7 +42,7 @@ public class MinioConfig {
                 if (!exists) {
                     client.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
                 }
-                log.info("默认bucket:{},准备就绪。", bucketName);
+                log.info("⭕默认bucket:{},准备就绪。", bucketName);
             } catch (Exception e) {
                 // 捕获网络异常或服务未启动异常
                 log.warn("⚠️ MinIO 未启动，初始 bucket:{},创建失败: {}", bucketName, e.getMessage());

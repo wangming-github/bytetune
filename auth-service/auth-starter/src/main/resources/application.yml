@@ -1,6 +1,12 @@
 spring:
   application:
-    name: auth-starter
-
+    name: auth-service
+  config:
+    import:
+      # 多个YAML 会 按顺序加载，后面的会覆盖前面的同名属性
+      # 加“optional:” IDEA 就不会强制校验存在。
+      # 也可以在本文件覆盖[application-***.yml]的配置
+      - optional:classpath:application-domain.yml
 server:
   port: 8081
+

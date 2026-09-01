@@ -10,6 +10,11 @@ import java.util.List;
  * <p>
  * 歌曲信息表 服务类
  * </p>
+ * <p>
+ * public interface IService<T> extends IRepository<T>
+ * M = Mapper
+ * T = Entity
+ * <p>
  *
  * @author maizi
  * @since 2026-02-26
