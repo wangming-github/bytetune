@@ -1,6 +1,3 @@
-# Getting Started
-可以。下面这份更适合直接作为 `README.md` 里的 **Getting Started**，按照你现在 ByteTune 的 Maven 多模块结构来写，同时把 Kafka、MongoDB、MinIO、MySQL、启动参数这些都串起来。
-
 # ByteTune
 
 ByteTune 是一个基于 **Java 17 + Spring Boot 3.3.x** 构建的个人音乐管理与处理系统。
@@ -767,31 +764,3 @@ java -jar bytetune-service.jar \
 This project is for personal learning and development.
 
 ---
-
-````
-
-### 我建议你再补一块
-
-你这个项目已经不是单纯的 Spring Boot Demo 了，README 最好后面继续加一个 **Architecture / Design** 章节，把：
-
-```text
-bytetune
-├── starter
-│   ├── common
-│   ├── file
-│   ├── minio
-│   ├── mongodb
-│   ├── observe
-│   └── service
-│
-└── auth-service
-    ├── api
-    ├── core
-    ├── domain
-    ├── starter
-    └── util
-````
-
-以及 **模块依赖关系、Kafka 消息流、数据库关系、启动生命周期** 单独画成 Mermaid 图。
-
-这样这个 GitHub 项目看起来就会从“几个 Spring Boot 模块拼起来的项目”，变成一个**有完整架构设计的 Java 项目**。
