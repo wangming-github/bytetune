@@ -1,7 +1,8 @@
-package com.maizi.bytetune.mongodb;
+package com.maizi.bytetune.lyric;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.maizi.bytetune.lyric.LyricLine;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 

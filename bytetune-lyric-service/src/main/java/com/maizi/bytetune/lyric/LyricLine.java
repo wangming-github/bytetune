@@ -1,4 +1,4 @@
-package com.maizi.bytetune.mongodb;
+package com.maizi.bytetune.lyric;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

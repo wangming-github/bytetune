@@ -2,6 +2,7 @@ package com.maizi.bytetune.common.listener;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.common.utils.Java;
 import org.springframework.boot.context.event.*;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -9,6 +10,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.w3c.dom.Text;
 
 import javax.sql.DataSource;
 
@@ -119,6 +121,7 @@ public class ListenerAppStartup {
     public void onApplicationReady(ApplicationReadyEvent event) {
         onApplicationEvent(event);
         dataSourceAndDoc(event);
+        // Java 17：Text Blocks """ XXXXX """
         log.info("""
                 
                 ╔══════════════════════════════════════════════╗

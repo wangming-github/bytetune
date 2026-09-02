@@ -17,7 +17,7 @@
         <module>bytetune-common</module>
         <module>bytetune-file</module>
         <module>bytetune-minio</module>
-        <module>bytetune-mongodb</module>
+        <!--        <module>bytetune-mongodb</module>-->
         <module>bytetune-observe</module>
     </modules>
 

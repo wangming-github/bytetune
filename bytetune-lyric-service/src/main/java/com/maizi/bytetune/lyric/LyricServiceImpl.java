@@ -1,12 +1,16 @@
-package com.maizi.bytetune.mongodb;
+package com.maizi.bytetune.lyric;
 
+import com.maizi.bytetune.lyric.LyricFileParser;
+import com.maizi.bytetune.lyric.LyricRepository;
+import com.maizi.bytetune.lyric.LyricService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor // Lombok 的 @RequiredArgsConstructor 会自动生成构造函数：
 public class LyricServiceImpl implements LyricService {
@@ -59,6 +63,7 @@ public class LyricServiceImpl implements LyricService {
 
     @Override
     public List<Lyric> list() {
+        log.info("查询所有歌词");
         return lyricRepository.findAll();
     }
 }

@@ -12,10 +12,12 @@
     <packaging>pom</packaging>
     <description>父POM管理 bytetune模块和auth-service模块</description>
     <name>bytetune-祖父</name>
+
     <!-- ======================= 模块 ======================= -->
     <modules>
         <module>auth-service</module>
         <module>bytetune-service</module>
+        <module>bytetune-lyric-service</module>
     </modules>
 
     <!-- ======================= 全局属性 ======================= -->

@@ -1,4 +1,4 @@
-package com.maizi.bytetune.mongodb;
+package com.maizi.bytetune.lyric;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
