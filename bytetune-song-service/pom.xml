@@ -23,6 +23,12 @@
             <groupId>com.maizi</groupId>
             <artifactId>bytetune-messaging</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.maizi</groupId>
+            <artifactId>bytetune-contract</artifactId>
+        </dependency>
+        <!-- ======================================= -->
+        <!-- ======================================= -->
         <!-- Spring Boot Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,15 +1,14 @@
 package com.maizi.bytetune.file.scanner;
 
-import com.maizi.bytetune.common.event.song.SongUploadRequestEvent;
+import com.maizi.bytetune.contract.event.song.FileToSongEventDto;
 import com.maizi.bytetune.file.config.FileServiceProperties;
-import com.maizi.bytetune.file.messaging.SongUploadRequestEventProducer;
+import com.maizi.bytetune.file.messaging.FileToSongEventDto_Producer;
 import com.maizi.bytetune.file.model.SongFileInfo;
 import com.maizi.bytetune.file.processor.AudioFileProcessor;
 import com.maizi.bytetune.file.util.SongEventBuilder;
 import com.maizi.bytetune.file.watcher.WatcherOnStartup;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.MDC;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -66,7 +65,7 @@ public class ScannerOnStartup {
     /**
      * 歌曲上传请求事件生产者。
      */
-    private final SongUploadRequestEventProducer songUploadRequestEventProducer;
+    private final FileToSongEventDto_Producer fileToSongMsgProducer;
 
     /**
      * 旧版文件扫描服务。
@@ -118,10 +117,10 @@ public class ScannerOnStartup {
                     List<SongFileInfo> files = AudioFileProcessor.scan(watchPath);
 
                     // 将文件信息转换为上传请求事件
-                    List<SongUploadRequestEvent> songEventList = SongEventBuilder.toSongEventList(files);
+                    List<FileToSongEventDto> songEventList = SongEventBuilder.toSongEventList(files);
 
                     // 批量发送上传请求事件
-                    songUploadRequestEventProducer.publishBatch(songEventList);
+                    fileToSongMsgProducer.publishBatch(songEventList);
 
                 } catch (Exception e) {
                     log.error("扫描文件夹失败", e);
@@ -195,12 +194,12 @@ public class ScannerOnStartup {
                 return;
             }
             // 将文件解析为歌曲上传事件
-            SongUploadRequestEvent song = parseSongUploadedEvent(path);
+            FileToSongEventDto song = parseSongUploadedEvent(path);
             /*
              * TODO：
              * 发送消息，由 song-service 负责后续业务处理。
              */
-            songUploadRequestEventProducer.publish(song);
+            fileToSongMsgProducer.publish(song);
         } catch (Exception e) {
             log.error("处理新文件失败: {}", path.toAbsolutePath(), e);
         }
@@ -235,7 +234,7 @@ public class ScannerOnStartup {
      * @param path 音频文件路径
      * @return 歌曲上传请求事件
      */
-    private SongUploadRequestEvent parseSongUploadedEvent(Path path) throws Exception {
+    private FileToSongEventDto parseSongUploadedEvent(Path path) throws Exception {
         return SongEventBuilder.toEvent(AudioFileProcessor.getSongFileInfo(path.toFile()));
     }
 }

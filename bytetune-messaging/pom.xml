@@ -14,13 +14,6 @@
     <name>bytetune-messaging（消息传递）</name>
 
     <dependencies>
-        <!-- Lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-
         <!-- Spring 核心依赖：提供 @Component、@Service、@Autowired 等注解支持，使模块中的 Bean 能被 Spring 容器管理 -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -32,10 +25,16 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
 
-        <!-- TODO  bytetune-messaging中去处对common的依赖-->
+        <!-- Lombok -->
         <dependency>
-            <groupId>com.maizi</groupId>
-            <artifactId>bytetune-common</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- SLF4J：日志 API，@Slf4j 最终依赖它 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
     </dependencies>
 

@@ -3,7 +3,7 @@ package com.maizi.bytetune.song.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 // TODO kafka提取到file中
 // import com.maizi.bytetune.song.kafka.KafkaSongEventDTO;
-import com.maizi.bytetune.common.event.song.SongUploadRequestEvent;
+import com.maizi.bytetune.contract.event.song.FileToSongEventDto;
 import com.maizi.bytetune.song.entity.Song;
 
 import java.util.List;
@@ -40,8 +40,8 @@ public interface SongService extends IService<Song> {
 
     List<Song> selectUnUploaded(int batchSize);
 
-    boolean updateMinioStatus(Long id, int status, String bucketName, String objectName);
+    boolean updateStorageInfo(Long id, int status, String bucketName, String objectName);
 
     // TODO kafka提取到file中
-    List<SongUploadRequestEvent> loadPendingUploadEvents();
+    List<FileToSongEventDto> loadPendingUploadEvents();
 }

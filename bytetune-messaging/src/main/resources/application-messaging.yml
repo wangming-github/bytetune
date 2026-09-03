@@ -7,37 +7,35 @@ spring:
     bootstrap-servers: localhost:9092   # Kafka Broker 地址，Producer/Consumer 用来连接 Kafka 的节点
     producer:
       client-id: bytetune-kafka-client  # 生产者客户端 ID，用于标识生产者线程和日志
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      # 消息 Key 的序列化方式，通常用 StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      # 消息 Value 的序列化方式，这里用 JSON 序列化 DTO
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer # 消息 Key 的序列化方式，通常用 StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer  # 消息 Value 的序列化方式，这里用 JSON 序列化 DTO
     consumer:
       enable-auto-commit: false   # 关闭自动提交 offset
       auto-offset-reset: earliest # 消费者第一次启动从最早消息开始
       group-id: bytetune-kafka-group    # 消费者组 ID，同组的消费者共享分区消费进度
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      # 消息 Key 的反序列化方式
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      # 消息 Value 的反序列化方式，配合 JsonSerializer 使用
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer     # 消息 Key 的反序列化方式
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer   # 消息 Value 的反序列化方式，配合 JsonSerializer 使用
       properties:
-        spring.json.trusted.packages: "*"  # 允许反序列化 DTO 的包，* 表示信任所有包
+        spring.json.trusted.packages: "com.maizi.bytetune.contract.event.*" # 允许反序列化 DTO 的包，"*"  表示信任所有包
 
 logging:
   level:
-    org.apache.kafka.clients.producer.ProducerConfig: WARN #不显示配置快照
+    org.apache.kafka.clients.producer.ProducerConfig: WARN #不显示配置快照 需要配合依赖logback-spring.xml文件实现效果
 
 bytetune:
   messaging:
     # Kafka Topic 定义
     topics:
-      song-upload-request: song-upload-request
-      song-created: song-created
-      song-deleted: song-deleted
+      file-to-song: file-to-song
+      song-to-storage: song-to-storage
+      storage-to-song: storage-to-song
     # Consumer Group 定义
     consumer:
       song-service:
-        group-id: bytetune-song-service
+        group-id: bytetune-song-group
       lyric-service:
-        group-id: bytetune-lyric-service
+        group-id: bytetune-lyric-group
       file-service:
-        group-id: bytetune-file-service
+        group-id: bytetune-file-group
+      storage-service:
+        group-id: bytetune-storage-group

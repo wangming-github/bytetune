@@ -1,6 +1,6 @@
 package com.maizi.bytetune.file.model;
 
-import com.maizi.bytetune.common.constants.UploadStatus;
+import com.maizi.bytetune.common.constants.UploadStatusCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -70,7 +70,7 @@ public class SongFileInfo implements Serializable {
      */
     @Builder.Default
     @Schema(description = "0未上传 1已上传 2失败")
-    public int status = UploadStatus.NOT_UPLOADED.getCode(); // Builder 默认值
+    public int status = UploadStatusCode.NOT_UPLOADED.getCode(); // Builder 默认值
 
     @Schema(description = "创建时间")
     @Builder.Default

@@ -33,11 +33,13 @@
         <!-- 文件服务 -->
         <module>bytetune-file-service</module>
         <!-- MinIO 基础组件 -->
-        <module>bytetune-storage</module>
+        <module>bytetune-storage-service</module>
         <!-- 监控与日志 -->
         <module>bytetune-observe</module>
         <!-- 消息传递/中间件 -->
         <module>bytetune-messaging</module>
+        <!-- 跨服务通信契约 -->
+        <module>bytetune-contract</module>
     </modules>
 
     <!-- ======================= 全局属性 ======================= -->
@@ -87,7 +89,7 @@
             </dependency>
             <dependency>
                 <groupId>com.maizi</groupId>
-                <artifactId>bytetune-storage</artifactId>
+                <artifactId>bytetune-storage-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -99,6 +101,12 @@
             <dependency>
                 <groupId>com.maizi</groupId>
                 <artifactId>bytetune-messaging</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>bytetune-contract</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

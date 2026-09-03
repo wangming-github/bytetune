@@ -1,0 +1,8 @@
+在
+/Users/zimai/Documents/dev/env/kafka/kafka_2.13-4.2.0
+执行
+
+
+bin/kafka-topics.sh \
+  --bootstrap-server localhost:9092 \
+  --list

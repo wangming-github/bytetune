@@ -1,9 +1,9 @@
 package com.maizi.bytetune.file.scanner;
 
-import com.maizi.bytetune.common.event.song.SongUploadRequestEvent;
+import com.maizi.bytetune.contract.event.song.FileToSongEventDto;
 import com.maizi.bytetune.file.config.FileServiceProperties;
 import com.maizi.bytetune.file.decoder.NcmDecoder;
-import com.maizi.bytetune.file.messaging.SongUploadRequestEventProducer;
+import com.maizi.bytetune.file.messaging.FileToSongEventDto_Producer;
 import com.maizi.bytetune.file.model.SongFileInfo;
 import com.maizi.bytetune.file.processor.AudioFileProcessor;
 import com.maizi.bytetune.file.util.SongEventBuilder;
@@ -61,21 +61,21 @@ public class FileScanService {
     /**
      * 歌曲上传请求事件生产者。
      */
-    private final SongUploadRequestEventProducer songUploadRequestEventProducer;
+    private final FileToSongEventDto_Producer fileToSongMsgProducer;
 
     /**
      * 构造文件扫描服务。
      *
-     * @param properties                     文件服务配置
-     * @param ncmDecoder                     NCM 解码器
-     * @param fileScanExecutor               文件扫描线程池
-     * @param songUploadRequestEventProducer 歌曲上传请求事件生产者
+     * @param properties            文件服务配置
+     * @param ncmDecoder            NCM 解码器
+     * @param fileScanExecutor      文件扫描线程池
+     * @param fileToSongMsgProducer 歌曲上传请求事件生产者
      */
-    public FileScanService(FileServiceProperties properties, NcmDecoder ncmDecoder, @Qualifier("fileScanExecutor") Executor fileScanExecutor, SongUploadRequestEventProducer songUploadRequestEventProducer) {
+    public FileScanService(FileServiceProperties properties, NcmDecoder ncmDecoder, @Qualifier("fileScanExecutor") Executor fileScanExecutor, FileToSongEventDto_Producer fileToSongMsgProducer) {
         this.properties = properties;
         this.ncmDecoder = ncmDecoder;
         this.fileScanExecutor = fileScanExecutor;
-        this.songUploadRequestEventProducer = songUploadRequestEventProducer;
+        this.fileToSongMsgProducer = fileToSongMsgProducer;
     }
 
     /**
@@ -111,7 +111,7 @@ public class FileScanService {
                 }
                 log.info("扫描完成，共发现 {} 个音乐文件", files.size());
                 // 将文件信息转换为歌曲上传请求事件
-                List<SongUploadRequestEvent> events = SongEventBuilder.toSongEventList(files);
+                List<FileToSongEventDto> events = SongEventBuilder.toSongEventList(files);
 
                 // 没有需要发送的事件
                 if (events.isEmpty()) {
@@ -119,7 +119,7 @@ public class FileScanService {
                     return;
                 }
                 // 批量发送歌曲上传请求事件
-                songUploadRequestEventProducer.publishBatch(events);
+                fileToSongMsgProducer.publishBatch(events);
                 log.info("歌曲上传请求事件发送完成，数量：{}", events.size());
             } catch (Exception e) {
 

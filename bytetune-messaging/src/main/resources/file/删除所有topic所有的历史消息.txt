@@ -1,0 +1,10 @@
+在
+/Users/zimai/Documents/dev/env/kafka/kafka_2.13-4.2.0
+执行
+
+for topic in $(bin/kafka-topics.sh --bootstrap-server localhost:9092 --list); do
+  bin/kafka-topics.sh \
+    --bootstrap-server localhost:9092 \
+    --delete \
+    --topic "$topic"
+done

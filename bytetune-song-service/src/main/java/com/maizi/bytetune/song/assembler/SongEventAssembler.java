@@ -1,6 +1,6 @@
 package com.maizi.bytetune.song.assembler;
 
-import com.maizi.bytetune.common.event.song.SongUploadRequestEvent;
+import com.maizi.bytetune.contract.event.song.FileToSongEventDto;
 import com.maizi.bytetune.song.entity.Song;
 import org.springframework.stereotype.Component;
 
@@ -21,9 +21,9 @@ public class SongEventAssembler {
     /**
      * 批量转换实体为事件对象
      */
-    public List<SongUploadRequestEvent> toEvents(List<Song> songs) {
+    public List<FileToSongEventDto> toEvents(List<Song> songs) {
         return songs.stream()//
-                .map(song -> SongUploadRequestEvent.builder()//
+                .map(song -> FileToSongEventDto.builder()//
                         .songId(song.getId())//
                         .songName(song.getName())//
                         .build())//

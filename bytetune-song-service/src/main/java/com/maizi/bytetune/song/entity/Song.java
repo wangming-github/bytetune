@@ -2,7 +2,7 @@ package com.maizi.bytetune.song.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.maizi.bytetune.common.constants.UploadStatus;
+import com.maizi.bytetune.common.constants.UploadStatusCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -69,7 +69,7 @@ public class Song implements Serializable {
      */
     @Builder.Default
     @Schema(description = "0未上传 1已上传 2失败")
-    private int status = UploadStatus.NOT_UPLOADED.getCode(); // Builder 默认值
+    private int status = UploadStatusCode.NOT_UPLOADED.getCode(); // Builder 默认值
 
     @Schema(description = "创建时间")
     @Builder.Default

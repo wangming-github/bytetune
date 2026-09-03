@@ -25,10 +25,10 @@ public class KafkaMessagePublisher implements MessagePublisher {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     /**
-     * 发布消息。
+     * 发布单条消息。
      *
      * @param topic   Kafka Topic
-     * @param message 消息
+     * @param message 通用消息对象
      */
     @Override
     public void publish(String topic, Message message) {
@@ -37,9 +37,9 @@ public class KafkaMessagePublisher implements MessagePublisher {
                 .whenComplete((result, ex) -> {
 
                     if (ex == null) {
-                        log.info("\uD83D\uDCE4 Kafka 消息发送成功，topic={}, key={}", topic, message.getKey());
+                        // log.info("Kafka 消息发送成功，topic={}, key={}", topic, message.getKey());
                     } else {
-                        log.error("\uD83D\uDCE4 Kafka 消息发送失败，topic={}, key={}", topic, message.getKey(), ex);
+                        // log.error("Kafka 消息发送失败，topic={}, key={}", topic, message.getKey(), ex);
                     }
                 });
     }
@@ -52,6 +52,10 @@ public class KafkaMessagePublisher implements MessagePublisher {
      */
     @Override
     public void publishBatch(String topic, List<Message> messages) {
+
+        if (messages == null || messages.isEmpty()) {
+            return;
+        }
 
         messages.forEach(message -> publish(topic, message));
     }

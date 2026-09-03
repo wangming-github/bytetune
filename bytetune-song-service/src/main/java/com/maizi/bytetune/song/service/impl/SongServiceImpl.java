@@ -7,8 +7,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 // import com.maizi.bytetune.common.constants.UploadStatus;
 // import com.maizi.bytetune.common.kafka.KafkaSongEventAssembler;
 // import com.maizi.bytetune.common.kafka.KafkaSongEventDTO;
-import com.maizi.bytetune.common.constants.UploadStatus;
-import com.maizi.bytetune.common.event.song.SongUploadRequestEvent;
+import com.maizi.bytetune.common.constants.UploadStatusCode;
+import com.maizi.bytetune.contract.event.song.FileToSongEventDto;
 import com.maizi.bytetune.song.assembler.SongEventAssembler;
 import com.maizi.bytetune.song.entity.Song;
 import com.maizi.bytetune.song.mapper.SongMapper;
@@ -67,8 +67,12 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
     }
 
     @Override
-    public boolean updateMinioStatus(Long id, int status, String bucketName, String objectName) {
-        return lambdaUpdate().eq(Song::getId, id).set(Song::getStatus, status).set(Song::getBucketName, bucketName).set(Song::getObjectName, objectName).update();
+    public boolean updateStorageInfo(Long id, int status, String bucketName, String objectName) {
+        return lambdaUpdate()//
+                .eq(Song::getId, id).set(Song::getStatus, status)//
+                .set(Song::getBucketName, bucketName)//
+                .set(Song::getObjectName, objectName)//
+                .update();
     }
 
     /**
@@ -78,14 +82,14 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
      */
     // TODO kafka提取到file中
     @Override
-    public List<SongUploadRequestEvent> loadPendingUploadEvents() {
+    public List<FileToSongEventDto> loadPendingUploadEvents() {
 
         // 查询状态为 未上传 或 失败 的数据
         List<Song> songs = songMapper.selectList(//
                 new LambdaQueryWrapper<Song>()//
                         .in(Song::getStatus, //
-                                UploadStatus.NOT_UPLOADED.getCode(),//
-                                UploadStatus.FAILED.getCode()));
+                                UploadStatusCode.NOT_UPLOADED.getCode(),//
+                                UploadStatusCode.FAILED.getCode()));
 
         if (songs.isEmpty()) {
             return Collections.emptyList();
