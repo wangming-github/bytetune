@@ -15,6 +15,7 @@
 
     <artifactId>auth-domain</artifactId>
     <packaging>jar</packaging>
+    <name>auth-domain（认证领域模型）</name>
 
     <dependencies>
 

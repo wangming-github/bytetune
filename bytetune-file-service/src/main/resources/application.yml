@@ -1,0 +1,20 @@
+server:
+  port: 8081
+
+bytetune-file-service:
+  watch-path-in: "/Users/zimai/Music/网易云音乐"
+  watch-path-out: "/Users/zimai/Music/云音乐转换mp3"
+  ncm-decoder-command: /opt/homebrew/bin/ncmdump  #以：'which ncmdump' 返回的路径为准。
+
+
+spring:
+  application:
+    name: bytetune-file-service
+  config:
+    import:
+      # 多个YAML 会 按顺序加载，后面的会覆盖前面的同名属性
+      # 加“optional:” IDEA 就不会强制校验存在。
+      # 也可以在本文件覆盖[application-***.yml]的配置
+      - optional:classpath:application-common.yml
+      - optional:classpath:application-messaging.yml
+

@@ -1,0 +1,48 @@
+package com.maizi.bytetune.song.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.maizi.bytetune.common.dto.SongFileInfo_bak;
+import com.maizi.bytetune.song.entity.Song;
+import com.maizi.bytetune.song.mapper.SongMapper;
+import com.maizi.bytetune.song.service.SongExtService;
+import com.maizi.bytetune.song.service.SongService;
+import com.maizi.bytetune.song.util.SongEntityBuilder;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor // Lombok 的 @RequiredArgsConstructor 会自动生成构造函数：
+public class SongExtServiceImpl extends ServiceImpl<SongMapper, Song> implements SongExtService {
+
+    private final SongService songService;
+
+    /**
+     * 加载现有文件到数据库
+     *
+     * @param files 待处理的本地文件信息列表
+     */
+    @Override
+    public void loadExistingSongs(List<SongFileInfo_bak> files) {
+
+        if (files == null || files.isEmpty()) {
+            log.info("没有需要处理的文件！");
+            return;
+        }
+        // 转换为数据库实体
+        List<Song> songs = files.stream().map(SongEntityBuilder::toEntity).toList();
+        log.info("现有的文件数量：{}", songs.size());
+        // 过滤已经存在的歌曲（path + md5）
+        List<Song> newSongs = songs.stream().filter(song -> !songService.existsByFile(song.getPath(), song.getMd5())).toList();
+        log.debug("过滤已经存在的歌曲，未入库数量：{}", newSongs.size());
+
+        if (newSongs.isEmpty()) {
+            log.info("无现有的文件数据需要导入！");
+            return;
+        }
+        songService.saveAll(songs);
+    }
+}

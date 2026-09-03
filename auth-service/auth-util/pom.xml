@@ -15,6 +15,7 @@
 
     <artifactId>auth-util</artifactId>
     <packaging>jar</packaging>
+    <name>auth-util（认证工具）</name>
 
     <dependencies>
         <!-- 示例依赖：Spring Boot Web -->

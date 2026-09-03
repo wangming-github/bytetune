@@ -1,0 +1,47 @@
+package com.maizi.bytetune.song.service;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+// TODO kafka提取到file中
+// import com.maizi.bytetune.song.kafka.KafkaSongEventDTO;
+import com.maizi.bytetune.common.event.song.SongUploadRequestEvent;
+import com.maizi.bytetune.song.entity.Song;
+
+import java.util.List;
+
+/**
+ * <p>
+ * 歌曲信息表 服务类
+ * </p>
+ * <p>
+ * public interface IService<T> extends IRepository<T>
+ * M = Mapper
+ * T = Entity
+ * <p>
+ *
+ * @author maizi
+ * @since 2026-02-26
+ */
+public interface SongService extends IService<Song> {
+
+    void saveAll(List<Song> songs);
+
+    List<Song> getAll();
+
+    /**
+     * 判断指定文件是否已经存在于数据库中
+     *
+     * <p>同时通过文件路径和 MD5 值判断，防止同名但内容不同的文件重复入库。</p>
+     *
+     * @param path 文件的绝对路径或相对路径
+     * @param md5  文件的 MD5 值，用于唯一性判断
+     * @return {@code true} 如果数据库中已存在该文件；{@code false} 如果不存在
+     */
+    boolean existsByFile(String path, String md5);
+
+    List<Song> selectUnUploaded(int batchSize);
+
+    boolean updateMinioStatus(Long id, int status, String bucketName, String objectName);
+
+    // TODO kafka提取到file中
+    List<SongUploadRequestEvent> loadPendingUploadEvents();
+}

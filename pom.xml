@@ -6,18 +6,38 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- ====================================================== -->
+    <!-- 项目基本信息 -->
+    <!-- ====================================================== -->
     <groupId>com.maizi</groupId>
     <artifactId>bytetune</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <description>父POM管理 bytetune模块和auth-service模块</description>
-    <name>bytetune-祖父</name>
 
-    <!-- ======================= 模块 ======================= -->
+    <packaging>pom</packaging>
+
+    <name>bytetune</name>
+    <description>ByteTune 音乐管理系统父项目</description>
+
+    <!-- ====================================================== -->
+    <!-- 子模块 -->
+    <!-- ====================================================== -->
     <modules>
+        <!-- 认证服务 -->
         <module>auth-service</module>
-        <module>bytetune-service</module>
+        <!-- 音乐核心服务 -->
+        <module>bytetune-song-service</module>
+        <!-- 歌词服务 -->
         <module>bytetune-lyric-service</module>
+        <!-- 公共基础模块 -->
+        <module>bytetune-common</module>
+        <!-- 文件服务 -->
+        <module>bytetune-file-service</module>
+        <!-- MinIO 基础组件 -->
+        <module>bytetune-storage</module>
+        <!-- 监控与日志 -->
+        <module>bytetune-observe</module>
+        <!-- 消息传递/中间件 -->
+        <module>bytetune-messaging</module>
     </modules>
 
     <!-- ======================= 全局属性 ======================= -->
@@ -49,13 +69,36 @@
         <dependencies>
             <dependency>
                 <groupId>com.maizi</groupId>
-                <artifactId>bytetune-service</artifactId>
+                <artifactId>auth-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- ByteTune 公共模块 -->
+            <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>bytetune-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.maizi</groupId>
-                <artifactId>auth-service</artifactId>
+                <artifactId>bytetune-file-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>bytetune-storage</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>bytetune-observe</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>bytetune-messaging</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
