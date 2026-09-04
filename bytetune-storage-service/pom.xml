@@ -31,25 +31,14 @@
             <groupId>com.maizi</groupId>
             <artifactId>bytetune-messaging</artifactId>
         </dependency>
-        <!-- MinIO -->
+
+        <!-- ======================================= -->
+        <!-- ======================================= -->
+         <!-- MinIO -->
         <dependency>
             <groupId>io.minio</groupId>
             <artifactId>minio</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.maizi</groupId>
-            <artifactId>bytetune-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.maizi</groupId>
-            <artifactId>bytetune-messaging</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.maizi</groupId>
-            <artifactId>bytetune-contract</artifactId>
-        </dependency>
-        <!-- ======================================= -->
-        <!-- ======================================= -->
         <!-- Spring Boot Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

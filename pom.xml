@@ -69,19 +69,17 @@
     <!-- ======================= 依赖管理 ======================= -->
     <dependencyManagement>
         <dependencies>
+
+
+    <!-- ====================================================== -->
+    <!-- ByteTune 服务  -->
+    <!-- ====================================================== -->
             <dependency>
                 <groupId>com.maizi</groupId>
                 <artifactId>auth-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
-            <!-- ByteTune 公共模块 -->
-            <dependency>
-                <groupId>com.maizi</groupId>
-                <artifactId>bytetune-common</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
+     
             <dependency>
                 <groupId>com.maizi</groupId>
                 <artifactId>bytetune-file-service</artifactId>
@@ -92,11 +90,33 @@
                 <artifactId>bytetune-storage-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
+                  <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>bytetune-song-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+                  <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>bytetune-lyric-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.maizi</groupId>
                 <artifactId>bytetune-observe</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+
+    <!-- ====================================================== -->
+    <!-- ByteTune 公共模块  -->
+    <!-- ====================================================== -->
+ 
+            <dependency>
+                <groupId>com.maizi</groupId>
+                <artifactId>bytetune-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>com.maizi</groupId>
@@ -110,6 +130,10 @@
                 <version>${project.version}</version>
             </dependency>
 
+
+    <!-- ====================================================== -->
+    <!-- ByteTune 版本  -->
+    <!-- ====================================================== -->
             <!-- Spring Boot 统一依赖版本 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
