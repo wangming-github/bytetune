@@ -8,5 +8,4 @@ spring:
       # 也可以在本文件覆盖[application-***.yml]的配置
       - optional:classpath:application-domain.yml
 server:
-  port: 8081
-
+  port: 8089
